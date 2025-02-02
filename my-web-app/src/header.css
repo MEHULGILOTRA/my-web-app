@@ -1,0 +1,59 @@
+/* header.css */
+header {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    height: 80vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+    animation: slideIn 1s ease-out;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  header h1 {
+    font-size: 5em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+  }
+  
+  header p {
+    font-size: 1.5em;
+    margin-top: 20px;
+    font-weight: 300;
+    color: white;
+    opacity: 0.8;
+  }
+  
+  .header-btn {
+    margin-top: 40px;
+    padding: 15px 30px;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 1.3em;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .header-btn:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.1);
+  }
+  

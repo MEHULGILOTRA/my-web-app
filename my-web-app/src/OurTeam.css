@@ -1,0 +1,50 @@
+/* OurTeam.css */
+.our-team {
+    padding: 60px 20px;
+    background-color: var(--background-light);
+    text-align: center;
+  }
+  
+  .our-team h2 {
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+  }
+  
+  .team-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .team-member {
+    width: 280px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .team-member:hover {
+    transform: translateY(-10px);
+  }
+  
+  .team-member img {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .team-member h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .team-member p {
+    font-size: 1.1em;
+    font-weight: 300;
+    color: var(--text-color);
+  }
+  

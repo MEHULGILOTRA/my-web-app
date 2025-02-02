@@ -1,0 +1,60 @@
+/* ExclusivePackages.css */
+.exclusive-packages {
+    padding: 60px 20px;
+    background-color: var(--background-light);
+    text-align: center;
+  }
+  
+  .exclusive-packages h2 {
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+  }
+  
+  .packages {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  .package-card {
+    background-color: white;
+    width: 280px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+  }
+  
+  .package-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .package-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+  
+  .package-card p {
+    font-size: 1.1em;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+  
+  .package-card .button {
+    padding: 15px 30px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.3em;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .package-card .button:hover {
+    background-color: var(--accent-color);
+    transform: scale(1.1);
+  }
+  

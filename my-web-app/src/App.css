@@ -1,0 +1,84 @@
+/* app.css */
+:root {
+  --primary-color: #2A2A72; /* Rich Purple */
+  --accent-color: #7B1FA2; /* Purple Pink */
+  --background-color: #F2E8D5; /* Creamy Beige */
+  --text-color: #4B4B4B; /* Dark Gray */
+  --background-light: #F9F1E7; /* Light Beige for Sections */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  transition: all 0.5s ease;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+}
+
+.section {
+  padding: 60px 20px;
+  background-color: var(--background-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-10px);
+}
+
+.section h2 {
+  font-size: 2.5em;
+  color: var(--text-color);
+}
+
+.section p {
+  font-size: 1.5em;
+  font-weight: 300;
+  color: var(--text-color);
+}
+
+.button {
+  padding: 15px 30px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 1.3em;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .section h2 {
+    font-size: 2em;
+  }
+
+  .App-logo {
+    width: 80px;
+  }
+}
