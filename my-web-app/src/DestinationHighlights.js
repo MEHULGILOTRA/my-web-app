@@ -1,44 +1,57 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import images from './datasources/data-images';
 import './DestinationHighlights.css';
-import paris from './images/paris.jpeg'; 
-import greece from './images/greece.jpeg';
-import singapore from './images/singapore.jpeg';
 
-function DestinationHighlights() {
+const DestinationHighlights = () => {
+  const [index, setIndex] = useState(0);
+  const [borderColor, setBorderColor] = useState('rgba(255, 255, 255, 0.6)');
+  const totalImages = images.length;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % totalImages); // Change images every 3 seconds
+    }, 3000);
+
+    const borderInterval = setInterval(() => {
+      // Change the border color of the main image every 5 seconds
+      setBorderColor(
+        `hsl(${Math.random() * 360}, 100%, 70%)`
+      );
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(borderInterval);
+    };
+  }, [totalImages]);
+
   return (
     <section className="destination-highlights">
       <h2>Top Destinations</h2>
-      <div className="destination-cards">
-        <div className="card">
-            <img
-                src={paris} 
-                alt="" 
-                style={{ height: '80px', marginLeft: '30px' }} // Adjust height as needed
+      <div className="scroll-container">
+        <div className="scroll-line">
+          {images.map((image, i) => {
+            return (
+              <div
+                key={i}
+                className={`scroll-item ${i === index ? 'main-item' : ''}`}
+                style={{
+                  borderColor: i === index ? borderColor : 'rgba(255, 255, 255, 0.6)',
+                }}
+              >
+                <img
+                  src={image.src}
+                  alt={image.description}
+                  className={i === index ? 'main-image' : ''}
                 />
-          <h3>Paris</h3>
-          <p>Indulge in timeless romance and artistic charm.</p>
-        </div>
-        <div className="card">
-        <img
-                src={greece} 
-                alt="" 
-                style={{ height: '80px', marginLeft: '30px' }} // Adjust height as needed
-                />
-          <h3>Greece</h3>
-          <p>Immerse yourself in ancient history and stunning island views.</p>
-        </div>
-        <div className="card">
-        <img
-                src={singapore} 
-                alt="" 
-                style={{ height: '80px', marginLeft: '30px' }} // Adjust height as needed
-                />
-          <h3>Singapore</h3>
-          <p>Experience the perfect blend of tradition and modern innovation.</p>
+                <p>{image.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-}
+};
 
 export default DestinationHighlights;

@@ -8,12 +8,18 @@ import Testimonials from './Testimonials';
 import OurTeam from './OurTeam';
 import ContactUs from './ContactUs';
 import GoToTopButton from './GoToTopButton';
+import LandingPageSlider from './LandingPageSlider';
 
 function App() {
   return (
     <div className="App">
       <Header />
       <main className="main-content">
+        <div>
+          <section id="landingpage" className="section">
+          <LandingPageSlider/>
+          </section>
+          </div>
         <section id="home" className="section">
           <h2>Your Dream Vacation Awaits</h2>
           <p>Explore the world's most luxurious destinations with us.</p>
