@@ -86,7 +86,7 @@
     height: 12px;
     margin: 0 5px;
     background-color: rgba(255, 255, 255, 0.5);
-    transform: rotate(22.5deg); /* Rotates the square to make it a diamond */
+    transform: rotate(22.5deg);
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block;
