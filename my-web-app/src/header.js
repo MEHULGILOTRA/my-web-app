@@ -18,7 +18,9 @@ function Header() {
           </h1>
           <p>Experience the elegance of luxury travel</p>
           <a href="#discover" className="header-btn">
+          <HashLink to="#landingpage" smooth className="li-items">
             Start Your Journey
+            </HashLink>
           </a>
         </div>
         <div className='header-nav'>
