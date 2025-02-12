@@ -1,164 +1,160 @@
 /* Landing Page Slider */
 .landing-page-slider {
-    position: relative;
+  position: relative;
+  width: 100%;
+  height: 100vh;  /* Full viewport height */
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+/* Slider Image Container */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.5) translateY(40%);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.image-slider {
     width: 100%;
     height: 100vh;
-    overflow: hidden;
-    display: flex;
-    align-items: center;  /* Center images vertically */
-    justify-content: center;  /* Center images horizontally */
-  }
-    
-  /* Hide the placeholder dots */
-  .paragraph-hide {
-    color: white !important;
-  }
-    
-  /* Slider Image Container */
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transform: scale(0.5) translateY(40%);
-    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
-  }
-  
-  .slide.active {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  
-  /* Image Description - Center-left */
-  .image-description {
-    position: absolute;
-    top: 25%;  /* Center vertically */
-    left: 42%;  /* Adjust as needed */
-    transform: translateY(-50%);
-    font-family: 'Courier New', Courier, monospace;
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-    font-size: 60px;
-    color: white;
-    font-weight: bold;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional shadow for better visibility */
-  }
-  
-  /* Overlay Text (centered) */
-  .overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-  }
-  
-  /* Button Style */
-  .button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #ff6200;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background 0.3s;
-  }
-  
-  .button:hover {
-    background-color: #e55b00;
-  }
-  
-  /* Dot Container */
-  .dots-container {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Individual Dot */
-  .dot {
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    background-color: rgba(255, 255, 255, 0.5);
-    transform: rotate(22.5deg);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-  }
-    
-  /* Active Dot */
-  .active-dot {
-    background-color: white;
-  }
-  
-  /* Next Image Previews */
-  .next-images-container {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .next-image-preview {
-    width: 80px;  /* Set to a smaller value if needed */
-    height: 80px;
-    border: 3px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50%;  /* Makes the container circular */
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-  }
-  
-  .next-image-preview:hover {
-    transform: scale(1.5); /* Add zoom-in effect on hover */
-  }
-  
-  .next-image-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  /* Ensures the image fills the circle without distortion */
-  }
-  
-  /* Search Bar Styles */
-  .search-bar {
-    position: absolute;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    background-color: rgba(34, 34, 34, 0.7);
-    padding: 10px 20px;
-    border-radius: 25px;
-    width: 300px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .search-bar input {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    padding: 5px 10px;
-    font-size: 16px;
-    color: white;
-    border-radius: 25px;
-  }
-  
-  /* Search Icon Styles */
-  .search-bar .search-icon {
-    font-size: 18px;
-    color: #000000;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  
+}
+.slide.active {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Image Description - Center-left */
+.image-description {
+  position: absolute;
+  top: 25%;  /* Center vertically */
+  left: 42%;  /* Adjust as needed */
+  transform: translateY(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 60px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Optional shadow for better visibility */
+}
+
+/* Overlay Text (centered) */
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+/* Button Style */
+.button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ff6200;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.button:hover {
+  background-color: #e55b00;
+}
+
+/* Dot Container (always at the bottom of the screen) */
+.dots-container {
+  position: absolute;
+  bottom: 20px;  /* Adjusted to align it closer to the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Individual Dot */
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: rotate(22.5deg);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+}
+
+/* Active Dot */
+.active-dot {
+  background-color: white;
+}
+
+/* Next Image Previews (aligned at the bottom-right corner) */
+.next-images-container {
+  position: absolute;
+  bottom: 20px;  /* Aligned to the bottom of the screen */
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+
+.next-image-preview {
+  width: 80px;  /* Set to a smaller value if needed */
+  height: 80px;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;  /* Makes the container circular */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.next-image-preview:hover {
+  transform: scale(1.5); /* Add zoom-in effect on hover */
+}
+
+.next-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Ensures the image fills the circle without distortion */
+}
+
+/* Search Bar Styles (optional) */
+.search-bar {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  background-color: rgba(34, 34, 34, 0.7);
+  padding: 10px 20px;
+  border-radius: 25px;
+  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  padding: 5px 10px;
+  font-size: 16px;
+  color: white;
+  border-radius: 25px;
+}
+
+/* Search Icon Styles */
+.search-bar .search-icon {
+  font-size: 18px;
+  color: #000000;
+  margin-left: 20px;
+  cursor: pointer;
+}

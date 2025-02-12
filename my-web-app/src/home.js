@@ -7,7 +7,7 @@ import './Home.css';
 function Home() {
   return (
     <div className="home">
-      <Header />
+      {/* <Header />
       <main>
         <section className="intro">
           <h1>Welcome to Skymiles Travel</h1>
@@ -17,11 +17,10 @@ function Home() {
         <section className="destinations">
           <h2>Popular Destinations</h2>
           <div className="destination-cards">
-            {/* Featured destinations cards */}
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer /> */}
     </div>
   );
 }

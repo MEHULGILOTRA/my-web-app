@@ -2,35 +2,31 @@
   text-align: center;
   background-color: var(--background-light);
   padding: 0;
-  height: 100vh; /* Take full height of the screen */
+  height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-}
-
-.destination-highlights h2 {
-  font-size: 3em;
-  margin-bottom: 40px;
-  color: var(--primary-color);
+  overflow: hidden; /* Prevents overflow */
+  position: relative;
 }
 
 /* Scroll Container */
 .scroll-container {
-  width: 100%;
-  overflow: hidden;
+  width: 100vw;
+  overflow: hidden; /* Prevents page scrolling */
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-/* Scroll Line with Flexbox to move images horizontally */
+/* Scroll Line with Flexbox */
 .scroll-line {
   display: flex;
   flex-wrap: nowrap;
-  animation: scroll 20s linear infinite; /* Make it scroll horizontally */
-  justify-content: center;
+  width: max-content; /* Ensure it fits content dynamically */
+  animation: scroll 20s linear infinite;
 }
 
 /* Individual Scroll Item */
@@ -40,25 +36,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
   position: relative;
+  transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-/* Square images */
+/* Images */
 .scroll-item img {
   width: 120px;
   height: 120px;
   object-fit: cover;
-  border-radius: 10px; /* Rounded corners */
-  border: 2px solid rgba(255, 255, 255, 0.6); /* Default border */
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2); /* Image shadow */
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Main image styling */
 .scroll-item .main-image {
-  border: 3px solid var(--primary-color); /* Border for main image */
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5); /* Strong shadow for main image */
+  border: 3px solid var(--primary-color);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* Image description */
@@ -70,18 +66,18 @@
   text-align: center;
 }
 
-/* Scroll Animation (Horizontal scrolling effect) */
+/* Scroll Animation (Continuous Scrolling Effect) */
 @keyframes scroll {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-100%); /* Shift images to the left */
+    transform: translateX(calc(-50%)); /* Scrolls halfway and loops */
   }
 }
 
-/* Hover effect for scroll images */
+/* Hover effect */
 .scroll-item img:hover {
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow on hover */
+  transform: scale(1.1);
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
 }

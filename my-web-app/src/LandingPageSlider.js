@@ -2,30 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './LandingPageSlider.css';
 import images from './datasources/data-images';
 
-// import imag1 from './images/imag1.jpeg';
-// import imag2 from './images/imag2.jpeg';
-// import imag3 from './images/imag3.jpeg';
-// import imag4 from './images/imag4.jpeg';
-// import imag5 from './images/imag5.jpeg';
-// import imag6 from './images/imag6.jpeg';
-// import imag7 from './images/imag7.jpeg';
-// import imag8 from './images/imag8.jpeg';
-
-// // Dictionary with image names and descriptions
-// const imageDescriptions = {
-//   imag1: 'SYDNEY',
-//   imag2: 'Place 2',
-//   imag3: 'Place 3',
-//   imag4: 'Place 4',
-//   imag5: 'Place 5',
-//   imag6: 'Place 6',
-//   imag7: 'Place 7',
-//   imag8: 'Place 8',
-// };
-
-// // Array of images
-// const images = [imag1, imag2, imag3, imag4, imag5, imag6, imag7, imag8];
-
 function LandingPageSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -46,19 +22,44 @@ function LandingPageSlider() {
   return (
     <section className="landing-page-slider">
       {/* Images Slider */}
-      <p className="paragraph-hide">
+      {/* <p className="paragraph-hide">
         ....................................................................................................................................................................................................................
-      </p>
+      </p> */}
       {images.map((image, index) => (
         <div
           key={index}
           className={`slide ${index === currentIndex ? 'active' : ''}`}
         >
-          <img
+          {/* <img
             src={image.src}
             alt={`Slide ${index + 1}`}
             style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
-          />
+          /> */}
+<img
+  srcSet={`
+    ${image.src}?w=320 320w,
+    ${image.src}?w=480 480w,
+    ${image.src}?w=768 768w,
+    ${image.src}?w=1024 1024w,
+    ${image.src}?w=1366 1366w,
+    ${image.src}?w=1920 1920w,
+    ${image.src}?w=2560 2560w,
+    ${image.src}?w=3840 3840w,
+    ${image.src}?w=4096 4096w
+  `}
+  sizes="(max-width: 320px) 100vw,
+         (max-width: 480px) 100vw,
+         (max-width: 768px) 100vw,
+         (max-width: 1024px) 100vw,
+         (max-width: 1366px) 100vw,
+         (max-width: 1920px) 100vw,
+         (max-width: 2560px) 100vw,
+         100vw"
+  src={image.src}
+  alt={`Slide ${index + 1}`}
+  className = "image-slider"
+/>
+
           {/* Display Description at Center-Left */}
           {index === currentIndex && (
             <div className="image-description">
@@ -97,8 +98,8 @@ function LandingPageSlider() {
             <img
               src={image.src}
               alt={`Next Preview ${index + 1}`}
-              style={{ width: '80px', height: 'auto', objectFit: 'cover' }}
-            />
+              style={{ maxWidth: '80px', height: 'auto', objectFit: 'cover' }}
+              />
           </div>
         ))}
       </div>
