@@ -30,8 +30,8 @@
 /* Image Description - Center-left */
 .image-description {
   position: absolute;
-  top: 25%;  /* Center vertically */
-  left: 42%;  /* Adjust as needed */
+  top: 25vh;
+  left: 42vw;
   transform: translateY(-50%);
   font-family: 'Courier New', Courier, monospace;
   font-size: 60px;
