@@ -14,7 +14,8 @@ import norway from '.././images/norway.avif';
 import norway2 from '.././images/norway2.avif';
 import spain_madrid from '.././images/spain-madrid.avif';
 import south_africa from '.././images/south_africa.avif';
-
+import maldives from '.././images/maldives.webp';
+import maldives2 from '.././images/maldives2.avif';
 
 // Dictionary with image names and descriptions
 const imageDescriptions = {
@@ -34,7 +35,8 @@ const imageDescriptions = {
   norway2 : 'Norway',
   spain_madrid : 'Madrid (Spain)',
   south_africa : 'South Africa',
-
+  maldives : "Maldives",
+  maldives2 : "Maldives",
 };
 
 // Array of image objects with descriptions
@@ -55,6 +57,9 @@ const images = [
   { src: norway2, description: imageDescriptions.norway2},
   { src: spain_madrid, description: imageDescriptions.spain_madrid},
   { src: south_africa, description: imageDescriptions.south_africa},
+  { src: maldives, description: imageDescriptions.maldives},
+  { src: maldives2, description: imageDescriptions.maldives2},
+
 ];
 
 export default images;

@@ -13,50 +13,42 @@ import LandingPageSlider from './LandingPageSlider';
 function App() {
   return (
     <div className="App">
-      <Header />
+      <section id="landingpage">
+        <Header />
+        <LandingPageSlider />
+      </section>
+
       <main className="main-content">
-        <div>
-          <section id="landingpage" className="section">
-          <LandingPageSlider/>
-          </section>
-          </div>
-        <section id="home" className="section">
-          <h2>Your Dream Vacation Awaits</h2>
-          <p>Explore the world's most luxurious destinations with us.</p>
-          <div>
-            <button className="button">Discover More</button>
-          </div>
-        </section>
 
         <section id="destinations" className="section">
           <DestinationHighlights />
         </section>
 
-        <section id="packages" className="section">
+        {/* <section id="packages" className="section">
           <ExclusivePackages />
-        </section>
+        </section> */}
 
-        <section id="testimonials" className="section">
+        {/* <section id="testimonials" className="section">
           <Testimonials />
-        </section>
+        </section> */}
 
-        <section id="team" className="section">
+        {/* <section id="team" className="section">
           <OurTeam />
-        </section>
+        </section> */}
 
         <section id="contact" className="section">
           <ContactUs />
         </section>
 
-        <section className="section">
+        {/* <section className="section">
           <h2>Why Choose Us?</h2>
           <p>Experience the finest services, hand-picked tours, and expert guides.</p>
-          <button className="button">Learn More</button>
-        </section>
+          <button className="button no-background">Learn More</button>
+        </section> */}
       </main>
+
       <Footer />
       <GoToTopButton />
-
     </div>
   );
 }
