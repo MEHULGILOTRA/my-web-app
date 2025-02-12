@@ -35,30 +35,30 @@ function LandingPageSlider() {
             alt={`Slide ${index + 1}`}
             style={{ width: '100%', height: '100vh', objectFit: 'cover' }}
           /> */}
-<img
-  srcSet={`
-    ${image.src}?w=320 320w,
-    ${image.src}?w=480 480w,
-    ${image.src}?w=768 768w,
-    ${image.src}?w=1024 1024w,
-    ${image.src}?w=1366 1366w,
-    ${image.src}?w=1920 1920w,
-    ${image.src}?w=2560 2560w,
-    ${image.src}?w=3840 3840w,
-    ${image.src}?w=4096 4096w
-  `}
-  sizes="(max-width: 320px) 100vw,
-         (max-width: 480px) 100vw,
-         (max-width: 768px) 100vw,
-         (max-width: 1024px) 100vw,
-         (max-width: 1366px) 100vw,
-         (max-width: 1920px) 100vw,
-         (max-width: 2560px) 100vw,
-         100vw"
-  src={image.src}
-  alt={`Slide ${index + 1}`}
-  className = "image-slider"
-/>
+        <img
+          srcSet={`
+            ${image.src}?w=320 320w,
+            ${image.src}?w=480 480w,
+            ${image.src}?w=768 768w,
+            ${image.src}?w=1024 1024w,
+            ${image.src}?w=1366 1366w,
+            ${image.src}?w=1920 1920w,
+            ${image.src}?w=2560 2560w,
+            ${image.src}?w=3840 3840w,
+            ${image.src}?w=4096 4096w
+          `}
+          sizes="(max-width: 320px) 100vw,
+                (max-width: 480px) 100vw,
+                (max-width: 768px) 100vw,
+                (max-width: 1024px) 100vw,
+                (max-width: 1366px) 100vw,
+                (max-width: 1920px) 100vw,
+                (max-width: 2560px) 100vw,
+                100vw"
+          src={image.src}
+          alt={`Slide ${index + 1}`}
+          className = "image-slider"
+        />
 
           {/* Display Description at Center-Left */}
           {index === currentIndex && (
