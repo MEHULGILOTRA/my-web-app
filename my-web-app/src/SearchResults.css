@@ -2,6 +2,8 @@
     padding: 20px;
     font-family: 'Playfair Display', serif;
     background-color: #f5f0e6;
+    margin-top: 60px; /* Adjust this value as needed */
+
   }
   
   .search-title {
@@ -46,6 +48,7 @@
   .package-button {
     background: #b7950b;
     color: white;
+    background-color: var(--accent-color);
     padding: 10px 15px;
     border: none;
     border-radius: 6px;
@@ -55,8 +58,8 @@
   }
   
   .package-button:hover {
-    background: #9c7405;
-  }
+    background-color: var(--primary-color);
+}
   
   .details-list {
     margin-top: 15px;

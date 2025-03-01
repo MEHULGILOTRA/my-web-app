@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./header";
 import Footer from "./footer";
@@ -8,9 +8,21 @@ import ContactUs from "./ContactUs";
 import GoToTopButton from "./GoToTopButton";
 import LandingPageSlider from "./LandingPageSlider";
 import ChatbotButton from "./chat_icon";
-import SearchResults from "./SearchResults"; // Import Search Results Page
+import SearchResults from "./SearchResults";
 
 function App() {
+  const location = useLocation();
+
+  // Scroll to the section when the location hash changes
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   return (
     <div className="App">
       <Routes>
@@ -19,8 +31,8 @@ function App() {
           path="/"
           element={
             <>
+              <Header />
               <section id="landingpage">
-                <Header />
                 <LandingPageSlider />
               </section>
               <main className="main-content">
@@ -39,11 +51,16 @@ function App() {
         />
 
         {/* Search Results Page */}
-        <Route path="/search-results" element={
-          <>
-                <SearchResults/>
-          </>
-              }/>
+        <Route
+          path="/search-results"
+          element={
+            <>
+              <Header />
+              <SearchResults />
+              <Footer />
+            </>
+          }
+        />
 
         {/* Redirect any unknown route to the Landing Page */}
         <Route path="*" element={<Navigate to="/" />} />
