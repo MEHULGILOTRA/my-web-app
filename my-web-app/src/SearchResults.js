@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import "./SearchResults.css";
 import packageData from "./datasources/data-packages";
+import images from './datasources/data-images-package';
 
 function SearchResults() {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const destination = params.get("destination") || "YOUR SELECTED DESTINATION";
+//   const location = useLocation();
+//   const params = new URLSearchParams(location.search);
+//   const destination = params.get("destination") || "YOUR SELECTED DESTINATION";
   const [expandedPackage, setExpandedPackage] = useState(null);
   const [selectedDetail, setSelectedDetail] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
@@ -33,6 +34,13 @@ function SearchResults() {
         {packagesArray.length > 0 ? (
           packagesArray.map((pkg, index) => (
             <div key={index} className="package-box">
+            <div
+                className="image-container"
+                style={{
+                  backgroundImage: `url(${images[index]?.src})`,
+                }}
+              ></div>
+
               <div className="package-card">
                 <h2 className="package-title">{pkg?.name?.toUpperCase() || "PACKAGE NAME NOT AVAILABLE"}</h2>
                 <button 
