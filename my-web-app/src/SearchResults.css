@@ -82,7 +82,7 @@
   .arrow {
     margin-right: 10px;
     font-size: 14px;
-    color: #b7950b;
+    color: var(--accent-color);
   }
   
   /* Modal Styling */
