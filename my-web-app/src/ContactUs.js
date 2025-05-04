@@ -1,52 +1,41 @@
 import React, { useState } from "react";
 import "./ContactUs.css";
+import { sendEmail } from "./emailService";
 
 function ContactUs() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  const sendEmail = () => {
-    const emailData = { name, email, message };
+  const handleSendEmail = async () => {
 
-    fetch("http://localhost:5001/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(emailData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Email sent successfully!");
-        setName(""); // Clear fields after sending
-        setEmail("");
-        setMessage("");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Failed to send email.");
-      });
-  };
+    await sendEmail(
+      name,
+      email,
+      message,
+      "send-email"
+  );
+    await sendEmail(
+      name,
+      email,
+      message,
+      "send-email-user",
+  );
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    sendEmail();
-  };
 
   return (
     <section className="contact-us">
       <h2>Contact Us</h2>
-      <form onSubmit={handleSubmit}>
-        <textarea
+      <form onSubmit={handleSendEmail}>
+        <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Your Name"
           required
         />
-        <textarea
+        <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

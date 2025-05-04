@@ -74,13 +74,29 @@ body {
   transform: scale(1.1);
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .section h2 {
-    font-size: 2em;
+/* App.css */
+.App {
+  padding: 20px;
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+  .App {
+    padding: 15px;
   }
 
-  .App-logo {
-    width: 80px;
+  .main-content {
+    flex-direction: column;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .App {
+    padding: 10px;
+  }
+
+  .section {
+    padding: 10px 5px;
   }
 }

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./SearchResults.css";
 import packageData from "./datasources/data-packages";
 import images from './datasources/data-images-package';
-
+import { Link } from 'react-router-dom';
 function SearchResults() {
 //   const location = useLocation();
 //   const params = new URLSearchParams(location.search);
@@ -20,6 +20,7 @@ function SearchResults() {
     setSelectedDetail(detail);
     setIsModalOpen(true);
   };
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -49,6 +50,14 @@ function SearchResults() {
                 >
                   {expandedPackage === index ? "HIDE DETAILS" : "MORE DETAILS"}
                 </button>
+                <div>
+                <Link to="/#contact" className="li-items">
+                <h2 className="package-title"></h2>
+                <button className="package-button book-now">
+                  BOOK NOW
+                  </button>
+                </Link>
+                </div>
                 {expandedPackage === index && (
                   <div className="package-details">
                     <div className="details-list">

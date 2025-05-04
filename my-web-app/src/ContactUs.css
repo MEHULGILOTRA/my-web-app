@@ -14,13 +14,26 @@
 
 .contact-us textarea {
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   font-size: 1.1em;
+  font-family: 'Times New Roman', Times, serif;
   border-radius: 10px;
   border: 1px solid var(--primary-color);
   margin-bottom: 20px;
   resize: none;
 }
+
+.contact-us input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+  margin-bottom: 20px;
+  resize: none;
+}
+
 
 .contact-us .button {
   padding: 15px 30px;

@@ -159,6 +159,12 @@
   cursor: pointer;
 }
 
+.search-bar .search-button {
+  background: transparent;
+  border: none;
+  cursor : pointer;
+}
+
 .popup {
   position: fixed;
   top: 50%;
