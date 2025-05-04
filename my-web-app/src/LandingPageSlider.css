@@ -125,6 +125,12 @@
   object-fit: cover;  /* Ensures the image fills the circle without distortion */
 }
 
+@media (max-width: 480px) {
+  .next-image-preview img {
+    max-width: 60px;
+  }
+}
+
 /* Search Bar Styles (optional) */
 .search-bar {
   position: absolute;
@@ -163,6 +169,19 @@
   background: transparent;
   border: none;
   cursor : pointer;
+}
+
+@media (max-width: 480px) {
+  .search-bar {
+    width: 90%;
+  }
+  .search-bar input {
+    font-size: 0.9em;
+  }
+
+  .search-button {
+    font-size: 0.9em;
+  }
 }
 
 .popup {

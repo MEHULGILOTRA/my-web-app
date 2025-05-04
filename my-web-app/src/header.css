@@ -1,7 +1,7 @@
 /* Header Styles */
 .header-container {
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  height: 10vh;
+  height: auto;
   color: white;
   font-family: 'Roboto', sans-serif;
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
@@ -36,12 +36,15 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap; /* Allow wrapping */
 }
 
 /* Left Section (Logo & Title) */
 .header-left {
   display: flex;
   align-items: center;
+  gap: 10px;
+
 }
 
 .logo {
@@ -68,6 +71,35 @@
   max-width: 100%; /* Prevent overflow */
   overflow: hidden; /* Hide any overflow content */
 }
+@media (max-width: 767px) {
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header-right {
+    width: 100%;
+  }
+
+  .nav-list {
+    flex-direction: row; /* <-- force horizontal layout */
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .li-items {
+    width: 100%;
+  }
+
+  .li-items a {
+    width: 100%;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Light border for mobile */
+  }
+}
+
 
 .nav-list {
   display: flex;
