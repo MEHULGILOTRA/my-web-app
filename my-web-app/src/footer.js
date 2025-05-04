@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer>
       <div className="footer-content">
-        <p>&copy; 2024 Skymiles Travel. All rights reserved.</p>
+        <p>&copy; 2025 Skymiles Travel. All rights reserved.</p>
         <div className="social-icons">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
             <i className="fab fa-facebook"></i>
