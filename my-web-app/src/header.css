@@ -48,8 +48,10 @@
 }
 
 .logo {
-  height: 10vh; /* Adjust size as needed */
+  height: 10vh;
   margin-right: 10px;
+  transform: scale(2);
+  transform-origin: center center;
 }
 
 .header-title {

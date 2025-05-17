@@ -8,7 +8,9 @@ function Header() {
     <header className="header-container">
       <div className="header-top">
         <div className="header-left">
+          <Link to="/#landingpage">
           <img src={logo} alt="SkyMiles Logo" className="logo" />
+          </Link>
           <h1 className="header-title">SkyMiles Travel</h1>
         </div>
         <div className="header-right">
