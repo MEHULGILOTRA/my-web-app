@@ -31,11 +31,17 @@ function Header() {
                   Packages
                 </Link>
                 </li>
-              <li className="li-items">
+              {/* <li className="li-items">
                 <Link to="/#contact" className="li-items">
                   Contact Us
                 </Link>
+              </li> */}
+              <li className="li-items">
+                <Link to="/#about-us" className="li-items">
+                  About Us
+                </Link>
               </li>
+
             </ul>
           </nav>
         </div>

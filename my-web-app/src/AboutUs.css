@@ -1,0 +1,93 @@
+/* OurTeam.css */
+.about-us {
+    padding: 60px 20px;
+    background-color: var(--background-light);
+    text-align: center;
+  }
+  
+  .about-us h2 {
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+  }
+  
+  .about-us p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: var(--text-color);
+    max-width: 800px;
+    margin: 0 auto 30px;
+  }
+  
+  .about-us h3 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+  }
+  
+  .services-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    color : white;
+  }
+  
+  .services-list li {
+    background-color: var(--accent-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    font-weight: 500;
+    flex: 1 1 calc(50% - 40px);
+    text-align: center;
+    color : white
+  }
+  
+  .services-list li:hover {
+    background-color: var(--primary-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    font-weight: 500;
+    flex: 1 1 calc(50% - 40px);
+    text-align: center;
+  }
+  
+  @media (max-width: 600px) {
+    .services-list li {
+      flex: 1 1 100%;
+    }
+  }
+  
+  .services-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .service-icon {
+    transform: scale(1);
+    height: 120px;
+    width: auto;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  .service-card:hover .service-icon {
+    transform: scale(1.4);
+  }

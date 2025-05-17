@@ -13,22 +13,34 @@ footer {
     font-weight: 300;
     margin-bottom: 15px;
   }
-  
-  footer .social-icons {
-    margin-top: 20px;
+
+  .social-icons {
+    display: flex;
+    gap: 16px; /* Space between icons */
+    justify-content: center; /* Center the icons horizontally */
+    align-items: center;
+    margin-top: 10px;
   }
   
-  footer .social-icons a {
-    color: white;
-    font-size: 2em;
-    margin: 0 15px;
-    transition: color 0.3s ease;
+  .social-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
   }
   
-  footer .social-icons a:hover {
-    color: var(--accent-color);
+  .social-icon:hover {
+    transform: scale(1.2);
   }
   
+
+  footer .social-icons img {
+    transform: scale(1);
+    height: 60px;
+    width: 60px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+  }
+
   footer .footer-links {
     margin-top: 30px;
   }

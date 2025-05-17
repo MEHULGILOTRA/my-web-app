@@ -1,5 +1,5 @@
 
-import sydney1 from '.././images/clouds-over-the-sydney-opera-house.jpg';
+// import sydney1 from '.././images/clouds-over-the-sydney-opera-house.jpg';
 import rome1 from '.././images/rome1.jpg';
 import agra1 from '.././images/agra1.jpg';
 import china1 from '.././images/china1.jpg';
@@ -33,7 +33,7 @@ const imageDescriptions = {
 
 // Array of image objects with descriptions
 const images = [
-  { src: sydney1, description: imageDescriptions.sydney1},
+  // { src: sydney1, description: imageDescriptions.sydney1},
   // { src: hawaii1, description: imageDescriptions.hawaii1},
   // { src: sydney2, description: imageDescriptions.sydney2},
   // { src: sydney3, description: imageDescriptions.sydney3},

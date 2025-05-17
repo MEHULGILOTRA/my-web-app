@@ -4,7 +4,8 @@ import "./App.css";
 import Header from "./header";
 import Footer from "./footer";
 import DestinationHighlights from "./DestinationHighlights";
-import ContactUs from "./ContactUs";
+// import ContactUs from "./ContactUs";
+import AboutUs from "./AboutUs";
 import GoToTopButton from "./GoToTopButton";
 import LandingPageSlider from "./LandingPageSlider";
 import ChatbotButton from "./chat_icon";
@@ -39,8 +40,11 @@ function App() {
                 <section id="destinations" className="section">
                   <DestinationHighlights />
                 </section>
-                <section id="contact" className="section">
+                {/* <section id="contact" className="section">
                   <ContactUs />
+                </section> */}
+                <section id="about-us" className="section">
+                  <AboutUs />
                 </section>
               </main>
               <Footer />
