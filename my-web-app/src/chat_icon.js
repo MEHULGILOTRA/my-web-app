@@ -173,3 +173,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+export { responses };

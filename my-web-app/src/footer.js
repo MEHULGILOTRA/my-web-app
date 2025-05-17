@@ -1,7 +1,6 @@
 import React from 'react';
 import './footer.css';
 import social_icons from './datasources/social-icons';
-
 function Footer() {
   return (
     <footer>
@@ -22,6 +21,9 @@ function Footer() {
           <a href="#terms">Terms & Conditions</a>
         </div> */}
       </div>
+      <a href="mailto:skymilestravels1@gmail.com" className="email">
+        skymilestravels1@gmail.com
+      </a>
       <div className="footer-bottom">
         <p>Luxury travel, crafted for you.</p>
       </div>

@@ -66,4 +66,15 @@ footer {
   footer .footer-bottom p {
     margin: 0;
   }
+
+  footer .email {
+    font-size: bold 0.9em;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  footer a .email:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+  }
   
