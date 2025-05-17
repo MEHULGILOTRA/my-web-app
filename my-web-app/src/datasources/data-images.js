@@ -1,15 +1,5 @@
 
 import sydney1 from '.././images/clouds-over-the-sydney-opera-house.jpg';
-import hawaii1 from '.././images/hawaii1.jpg';
-import sydney2 from '.././images/sydney2.jpg';
-import sydney3 from '.././images/sydney3.jpg';
-import paris1 from '.././images/paris1.jpg';
-import paris2 from '.././images/paris2.jpg';
-import singapore1 from '.././images/singapore1.jpg';
-import singapore2 from '.././images/singapore2.jpg';
-import norway1 from '.././images/norway1.jpg';
-import phuket1 from '.././images/phuket1.jpg';
-import karabi1 from '.././images/karabi1.jpg';
 import rome1 from '.././images/rome1.jpg';
 import agra1 from '.././images/agra1.jpg';
 import china1 from '.././images/china1.jpg';
@@ -22,16 +12,16 @@ import yucatán1 from '.././images/yucatán1.jpg';
 const imageDescriptions = {
 
   sydney1 : "Opera House",
-  hawaii1 : "Mokolii Island",
-  sydney2 : "Saint Mary's Cathedral",
-  sydney3 : "Harbour Bridge",
-  paris1 : "Eiffel Tower",
-  paris2: "Louvre Museum",
-  singapore1: "Marina Bay Sand",
-  singapore2: "Gardens by the Bay",
-  norway1 : "Aurora Borealis",
-  phuket1 : "Big Buddha",
-  karabi1 : "Karabi Islands",
+  // hawaii1 : "Mokolii Island",
+  // sydney2 : "Saint Mary's Cathedral",
+  // sydney3 : "Harbour Bridge",
+  // paris1 : "Eiffel Tower",
+  // paris2: "Louvre Museum",
+  // singapore1: "Marina Bay Sand",
+  // singapore2: "Gardens by the Bay",
+  // norway1 : "Aurora Borealis",
+  // phuket1 : "Big Buddha",
+  // karabi1 : "Karabi Islands",
   rome1 : "Colosseum",
   agra1 : "Taj Mahal",
   china1 : "Great Wall of China",
@@ -43,7 +33,7 @@ const imageDescriptions = {
 
 // Array of image objects with descriptions
 const images = [
-  { src: sydney1, description: imageDescriptions.sydney1},
+  // { src: sydney1, description: imageDescriptions.sydney1},
   // { src: hawaii1, description: imageDescriptions.hawaii1},
   // { src: sydney2, description: imageDescriptions.sydney2},
   // { src: sydney3, description: imageDescriptions.sydney3},

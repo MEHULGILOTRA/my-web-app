@@ -20,28 +20,42 @@
       }
     };
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-      }, 3000);
-      return () => clearInterval(interval);
-    }, []);
+  // ─── Smooth Slide Scheduler ───────────────────────────────────────────────
+  useEffect(() => {
+    let timeoutId;
+    const scheduleNext = () => {
+      requestAnimationFrame(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      });
+      timeoutId = window.setTimeout(scheduleNext, 3000);
+    };
+    scheduleNext();
+    return () => clearTimeout(timeoutId);
+  }, []);
 
-    const nextImages = [
-      images[(currentIndex + 1) % images.length],
-      images[(currentIndex + 2) % images.length],
-      images[(currentIndex + 3) % images.length],
-    ];
-
-
+  // ─── Build the “active + neighbors” window ───────────────────────────────
+  const visibleSlides = images.filter((_, idx) => {
+    const delta = Math.abs(idx - currentIndex);
+    // wrap‑around distance for end→start
+    const wrapDelta = Math.abs(idx - currentIndex + images.length);
+    return Math.min(delta, wrapDelta) <= 1;
+  });
+  // ─── The next-3 previews (circularly) ──────────────────────────────────
+  const nextImages = [1,2,3].map((offset) =>
+    images[(currentIndex + offset) % images.length]
+  );
 
     return (
       <section className="landing-page-slider">
         {/* Image slider */}
-        {images.map((image, index) => (
+        {visibleSlides.map((imgObj, _, arr) =>
+        {
+          const idx = images.indexOf(imgObj);
+          const isActive = idx === currentIndex;
+          return (
           <div
-          key={index}
-          className={`slide ${index === currentIndex ? 'active' : ''}`}
+          key={idx}
+          className={`slide ${ isActive ? 'active' : ''}`}
         >
           {/* <img
             src={image.src}
@@ -50,27 +64,27 @@
           /> */}
         <img
           srcSet={`
-            ${image.src}?w=480 480w,
-            ${image.src}?w=768 768w,
-            ${image.src}?w=1366 1366w,
-            ${image.src}?w=1920 1920w
+            ${imgObj.src}?w=480 480w,
+            ${imgObj.src}?w=768 768w,
+            ${imgObj.src}?w=1366 1366w,
+            ${imgObj.src}?w=1920 1920w
           `}
           sizes="(max-width: 480px) 100vw,
                 (max-width: 768px) 100vw,
                 (max-width: 1366px) 100vw,
                 100vw"
-          src={image.src}
-          alt={`Slide ${index + 1}`}
+          src={imgObj.src}
+          alt={`Slide ${idx + 1}`}
           className = "image-slider"
         />
 
-          {index === currentIndex && (
+          {isActive && (
               <div className="image-description">
-                {image.description[`imag${index + 1}`]}
+                {imgObj.description[`imag${idx + 1}`]}
               </div>
             )}
           </div>
-        ))}
+  )})}
         {/* Overlay Text */}
         <div className="overlay">
           {/* <h1>Discover Your Next Adventure</h1>
