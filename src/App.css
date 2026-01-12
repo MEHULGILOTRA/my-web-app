@@ -1,10 +1,18 @@
 /* app.css */
 :root {
-  --primary-color: #2A2A72; /* Rich Purple */
-  --accent-color: #7B1FA2; /* Purple Pink */
-  --background-color: #F2E8D5; /* Creamy Beige */
-  --text-color: #4B4B4B; /* Dark Gray */
-  --background-light: #F9F1E7; /* Light Beige for Sections */
+  --primary-color: #2A2A72;
+  --accent-color: #7B1FA2;
+  --background-color: #F2E8D5;
+  --text-color: #4B4B4B;
+  --background-light: #F9F1E7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
 }
 
 body {
@@ -13,8 +21,7 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
-  box-sizing: border-box;
-  transition: all 0.5s ease;
+  overflow-x: hidden;
 }
 
 .App {
@@ -22,7 +29,6 @@ body {
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-
 }
 
 .main-content {
@@ -40,10 +46,11 @@ body {
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 .section:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) translateZ(0);
 }
 
 .section h2 {
@@ -67,11 +74,12 @@ body {
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  will-change: transform;
 }
 
 .button:hover {
   background-color: var(--primary-color);
-  transform: scale(1.1);
+  transform: scale(1.1) translateZ(0);
 }
 
 /* App.css */
