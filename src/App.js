@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import "./App.css";
 import Header from "./header";
 import Footer from "./footer";
 import DestinationHighlights from "./DestinationHighlights";
-// import ContactUs from "./ContactUs";
 import AboutUs from "./AboutUs";
 import GoToTopButton from "./GoToTopButton";
 import LandingPageSlider from "./LandingPageSlider";
@@ -14,20 +13,22 @@ import SearchResults from "./SearchResults";
 function App() {
   const location = useLocation();
 
-  // Scroll to the section when the location hash changes
-  useEffect(() => {
+  const scrollToSection = useCallback(() => {
     if (location.hash) {
       const element = document.getElementById(location.hash.substring(1));
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({ behavior: "auto" });
       }
     }
-  }, [location]);
+  }, [location.hash]);
+
+  useEffect(() => {
+    scrollToSection();
+  }, [scrollToSection]);
 
   return (
     <div className="App">
       <Routes>
-        {/* Landing Page */}
         <Route
           path="/"
           element={
@@ -40,9 +41,6 @@ function App() {
                 <section id="destinations" className="section">
                   <DestinationHighlights />
                 </section>
-                {/* <section id="contact" className="section">
-                  <ContactUs />
-                </section> */}
                 <section id="about-us" className="section">
                   <AboutUs />
                 </section>
@@ -54,7 +52,6 @@ function App() {
           }
         />
 
-        {/* Search Results Page */}
         <Route
           path="/search-results"
           element={
@@ -66,7 +63,6 @@ function App() {
           }
         />
 
-        {/* Redirect any unknown route to the Landing Page */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
