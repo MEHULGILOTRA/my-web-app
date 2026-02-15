@@ -1,52 +1,41 @@
 /* ContactUs.css */
 .contact-us {
-  padding: 60px 20px;
+  padding: var(--spacing-xl) var(--spacing-sm);
   background-color: var(--background-light);
   text-align: center;
-  
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.contact-us h2 {
-  font-size: 3em;
-  margin-bottom: 40px;
-  color: var(--primary-color);
+.contact-intro {
+  font-size: 1.2em;
+  color: var(--text-color);
+  margin-bottom: 30px;
+  font-family: var(--font-primary);
 }
 
-.contact-us textarea {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.1em;
-  font-family: 'Times New Roman', Times, serif;
-  border-radius: 10px;
-  border: 1px solid var(--primary-color);
-  margin-bottom: 20px;
-  resize: none;
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: fadeInUp 0.6s ease;
 }
 
-.contact-us input {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.1em;
-  font-family: 'Times New Roman', Times, serif;
-  border-radius: 10px;
-  border: 1px solid var(--primary-color);
-  margin-bottom: 20px;
-  resize: none;
+/* Remove redundant input/textarea styles - now using utility classes */
+.contact-us input:disabled,
+.contact-us textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f5f5f5;
 }
 
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-us {
+    padding: var(--spacing-lg) var(--spacing-xs);
+  }
 
-.contact-us .button {
-  padding: 15px 30px;
-  background-color: var(--primary-color);
-  color: white;
-  font-size: 1.3em;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.contact-us .button:hover {
-  background-color: var(--accent-color);
-  transform: scale(1.1);
+  .contact-intro {
+    font-size: 1em;
+  }
 }

@@ -1,0 +1,158 @@
+/* Global Utility Classes */
+/* These classes eliminate CSS duplication across components */
+
+/* ===== BUTTON STYLES ===== */
+.btn-primary {
+  padding: 15px 30px;
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 1.3em;
+  font-family: var(--font-primary);
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-normal), transform var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.btn-primary:active {
+  transform: scale(1.05);
+}
+
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.6;
+}
+
+/* ===== CARD STYLES ===== */
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* ===== SECTION HEADINGS ===== */
+.section-title {
+  font-size: var(--font-size-h1);
+  margin-bottom: 40px;
+  color: var(--primary-color);
+  font-family: var(--font-primary);
+  text-align: center;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  font-size: var(--font-size-h2);
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-family: var(--font-primary);
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ===== FORM INPUTS ===== */
+.form-input {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1.1em;
+  font-family: var(--font-primary);
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+  margin-bottom: 20px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  background-color: white;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1.1em;
+  font-family: var(--font-primary);
+  border-radius: 10px;
+  border: 1px solid var(--primary-color);
+  margin-bottom: 20px;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+}
+
+/* ===== FORM STATUS MESSAGES ===== */
+.form-message {
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  font-family: var(--font-primary);
+  text-align: center;
+  animation: slideIn 0.3s ease;
+}
+
+.form-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.form-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== SECTION CONTAINERS ===== */
+.section-container {
+  padding: 60px 20px;
+  background-color: var(--background-light);
+  text-align: center;
+}
+
+.section-container-alt {
+  padding: 60px 20px;
+  background-color: var(--background-color);
+  text-align: center;
+}

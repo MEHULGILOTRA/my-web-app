@@ -40,7 +40,7 @@
   top: 25vh;
   left: 42vw;
   transform: translateY(-50%) translateZ(0);
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-primary);
   font-size: 60px;
   color: white;
   font-weight: bold;

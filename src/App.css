@@ -1,10 +1,41 @@
+/* Import Utilities and Animations */
+@import './utilities.css';
+@import './animations.css';
+
 /* app.css */
 :root {
+  /* Colors */
   --primary-color: #2A2A72;
   --accent-color: #7B1FA2;
   --background-color: #F2E8D5;
   --text-color: #4B4B4B;
   --background-light: #F9F1E7;
+  --white: #FFFFFF;
+
+  /* Typography */
+  --font-primary: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-size-h1: 3em;
+  --font-size-h2: 2.5em;
+  --font-size-h3: 2em;
+  --font-size-body: 1.1em;
+  --font-size-small: 0.9em;
+
+  /* Spacing */
+  --spacing-xs: 10px;
+  --spacing-sm: 20px;
+  --spacing-md: 30px;
+  --spacing-lg: 40px;
+  --spacing-xl: 60px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 6px 15px rgba(0, 0, 0, 0.2);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
 * {
@@ -45,12 +76,18 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: transform 0.3s ease;
-  will-change: transform;
+  position: relative;
 }
 
-.section:hover {
-  transform: translateY(-10px) translateZ(0);
+/* Add gradient accent bar to sections */
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
 }
 
 .section h2 {

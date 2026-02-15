@@ -9,7 +9,7 @@ function Header() {
       <div className="header-top">
         <div className="header-left">
           <Link to="/#landingpage">
-          <img src={logo} alt="SkyMiles Logo" className="logo" />
+          <img src={logo} alt="SkyMiles Logo" className="logo" loading="eager" />
           </Link>
           <h1 className="header-title">SkyMiles Travel</h1>
         </div>
@@ -30,12 +30,12 @@ function Header() {
                 <Link to="/search-results?destination=" className="li-items">
                   Packages
                 </Link>
-                </li>
-              {/* <li className="li-items">
+              </li>
+              <li className="li-items">
                 <Link to="/#contact" className="li-items">
                   Contact Us
                 </Link>
-              </li> */}
+              </li>
               <li className="li-items">
                 <Link to="/#about-us" className="li-items">
                   About Us

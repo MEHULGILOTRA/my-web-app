@@ -1,6 +1,6 @@
 .search-results {
     padding: 20px;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-primary);
     background-color: #f5f0e6;
     margin-top: 60px;
   }
