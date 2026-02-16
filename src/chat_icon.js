@@ -1,23 +1,15 @@
 import React, { useState } from "react";
 import "./chat_icon.css";
 import { sendContactFormEmails } from "./emailServiceClient";
-<<<<<<< HEAD
-=======
 import Toast from "./components/Toast";
 
 const responses = []; // Define an array to store Q&A pairs
->>>>>>> claude/sharp-diffie
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(1);
     const [userInput, setUserInput] = useState("");
-<<<<<<< HEAD
-    const [errorMessage, setErrorMessage] = useState("");
-    const [responses, setResponses] = useState([]);
-=======
     const [toast, setToast] = useState(null);
->>>>>>> claude/sharp-diffie
     const [formData, setFormData] = useState({
         tripType: "",
         helpType: "",
@@ -56,11 +48,6 @@ const Chatbot = () => {
     };
 
     const handleSendEmail = async () => {
-<<<<<<< HEAD
-        setIsOpen(false);
-
-=======
->>>>>>> claude/sharp-diffie
         // Format responses into a readable message
         const formattedMessage = responses.join('\n');
         const userName = formData.email.split('@')[0] || 'Traveler';
@@ -73,26 +60,6 @@ const Chatbot = () => {
             );
 
             if (result.success) {
-<<<<<<< HEAD
-                alert('Thank you! Your travel requirements have been recorded. Check your email for confirmation.');
-            } else {
-                alert('Failed to send your query. Please check your EmailJS configuration.');
-            }
-        } catch (error) {
-            alert('Failed to send your query. Please try again or contact us directly.');
-        }
-
-        // Reset form
-        setStep(1);
-        setFormData({
-            tripType: "", helpType: "", destination: "", departureDate: "",
-            tripDays: "", email: "", contactNumber: "", adultsCount: "",
-            childrenCount: "", hotelCategory: "", budget: "", bookingTime: "",
-            departureLocation: "", packageDetails: "", whatsappUpdates: ""
-        });
-        setResponses([]);
-        setErrorMessage("");
-=======
                 setToast({
                     message: '✨ Thank you! Your travel requirements have been recorded. Check your email for confirmation.',
                     type: 'success'
@@ -122,9 +89,7 @@ const Chatbot = () => {
             });
             responses.length = 0;
         }, 2000);
->>>>>>> claude/sharp-diffie
     };
-
     const handleOptionClick = (value) => {
         const fieldNames = [
             "tripType", "helpType", "destination", "destination",
@@ -135,51 +100,31 @@ const Chatbot = () => {
 
         const field = fieldNames[step - 1];
 
-        setResponses(prev => [...prev, `Ques: ${questions[step]}\nAns: ${value}\n`]);
+        console.log(`Ques: ${questions[step]}`);
+        console.log(`Ans: ${value}`);
+        responses.push(`Ques: ${questions[step]}\nAns: ${value}\n`);
+
         setFormData(prev => ({ ...prev, [field]: value }));
         setStep(prev => prev + 1);
-        setErrorMessage("");
     };
 
-    const handleInputChange = (e) => {
-        setUserInput(e.target.value);
-        setErrorMessage("");
-    };
+    const handleInputChange = (e) => setUserInput(e.target.value);
 
     const handleSubmit = () => {
-        if (!userInput.trim()) {
-            setErrorMessage("Please enter a value");
-            return;
-        }
+        if (!userInput.trim()) return;
 
         if (step === 7 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userInput)) {
-            setErrorMessage("Please enter a valid email address");
+            alert("Please enter a valid email address.");
             return;
         }
 
         if (step === 8 && !/^[6-9]\d{9}$/.test(userInput)) {
-            setErrorMessage("Please enter a valid 10-digit mobile number starting with 6-9");
+            alert("Please enter a valid mobile number.");
             return;
         }
 
-        setErrorMessage("");
         handleOptionClick(userInput);
         setUserInput("");
-    };
-
-    const handleBack = () => {
-        if (step > 1) {
-            setStep(prev => prev - 1);
-            setResponses(prev => prev.slice(0, -1));
-            setErrorMessage("");
-        }
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            handleSubmit();
-        }
     };
 
     return (
@@ -188,26 +133,6 @@ const Chatbot = () => {
             {isOpen && (
                 <div className="chatbot-container">
                     <div className="chatbot-header">
-<<<<<<< HEAD
-                        <div className="header-left">
-                            {step > 1 && step < 17 && (
-                                <button className="back-button" onClick={handleBack}>← Back</button>
-                            )}
-                        </div>
-                        <span>AI Tour Bot</span>
-                        <button className="close-button" onClick={() => setIsOpen(false)}>×</button>
-                    </div>
-                    <div className="chatbot-content">
-                        {/* Progress Bar */}
-                        <div className="chatbot-progress">
-                            <div
-                                className="chatbot-progress-bar"
-                                style={{ width: `${(step / 17) * 100}%` }}
-                            />
-                        </div>
-
-                        <p className="chatbot-question">{questions[step]}</p>
-=======
                         <div>
                             <span>AI Tour Bot</span>
                             {step < 17 && (
@@ -217,17 +142,15 @@ const Chatbot = () => {
                         <button className="close-button" onClick={() => setIsOpen(false)}>×</button>
                     </div>                    <div className="chatbot-content">
                         <p>{questions[step]}</p>
->>>>>>> claude/sharp-diffie
 
                         {step === 3 || step === 7 || step === 8 || step === 12 || step === 14 ? (
                             <div className="chatbot-input-container">
                                 <input
-                                    type={step === 7 ? "email" : step === 8 ? "tel" : "text"}
+                                    type={step === 7 ? "email" : "text"}
                                     className="chatbot-input"
                                     placeholder="Enter your response"
                                     value={userInput}
                                     onChange={handleInputChange}
-                                    onKeyPress={handleKeyPress}
                                 />
                                 <button className="enter-button" onClick={handleSubmit}>✔</button>
                             </div>
@@ -270,25 +193,16 @@ const Chatbot = () => {
                                     <div className="chatbot-confirmation">
                                         <div className="confirmation-icon">✓</div>
                                         <h3>Almost Done!</h3>
-<<<<<<< HEAD
-                                        <p>We've recorded all your preferences. Click submit to send your travel requirements to our team.</p>
-                                        <p className="confirmation-note">You'll receive a confirmation email at <strong>{formData.email}</strong></p>
-=======
                                         <p className="confirmation-main">We've recorded all your travel preferences and are ready to craft your perfect journey!</p>
                                         <p className="confirmation-note">
                                             You'll receive a confirmation email at <strong>{formData.email}</strong>
                                         </p>
->>>>>>> claude/sharp-diffie
                                         <button onClick={handleSendEmail} className="submit-final-button">
                                             Submit My Requirements
                                         </button>
                                     </div>
                                 )}
                             </div>
-                        )}
-
-                        {errorMessage && (
-                            <p className="error-message">{errorMessage}</p>
                         )}
                     </div>
                 </div>
@@ -305,3 +219,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+export { responses };
