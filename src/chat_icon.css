@@ -366,3 +366,36 @@
         font-size: 15px;
     }
 }
+
+/* Back Button Styling - Enhanced */
+.back-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-3px);
+}
+
+.back-button::before {
+    content: '←';
+    font-size: 16px;
+}
+
+/* Progress Indicator */
+.chatbot-progress-text {
+    font-size: 12px;
+    opacity: 0.9;
+    font-weight: 400;
+}

@@ -1,5 +1,5 @@
 // GoToTopButton.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './GoToTopButton.css'; // Import the CSS for the button
 
 export default function GoToTopButton() {

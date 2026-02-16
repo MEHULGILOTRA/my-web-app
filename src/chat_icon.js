@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./chat_icon.css";
 import { sendContactFormEmails } from "./emailServiceClient";
+import Toast from "./components/Toast";
 
 const responses = []; // Define an array to store Q&A pairs
 
@@ -8,6 +9,7 @@ const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(1);
     const [userInput, setUserInput] = useState("");
+    const [toast, setToast] = useState(null);
     const [formData, setFormData] = useState({
         tripType: "",
         helpType: "",
@@ -46,8 +48,6 @@ const Chatbot = () => {
     };
 
     const handleSendEmail = async () => {
-        setIsOpen(false);
-
         // Format responses into a readable message
         const formattedMessage = responses.join('\n');
         const userName = formData.email.split('@')[0] || 'Traveler';
@@ -60,23 +60,35 @@ const Chatbot = () => {
             );
 
             if (result.success) {
-                alert('Thank you! Your travel requirements have been recorded. Check your email for confirmation.');
+                setToast({
+                    message: '✨ Thank you! Your travel requirements have been recorded. Check your email for confirmation.',
+                    type: 'success'
+                });
             } else {
-                alert('Failed to send your query. Please check your EmailJS configuration.');
+                setToast({
+                    message: 'Failed to send your query. Please check your EmailJS configuration.',
+                    type: 'error'
+                });
             }
         } catch (error) {
-            alert('Failed to send your query. Please try again or contact us directly.');
+            setToast({
+                message: 'Failed to send your query. Please try again or contact us directly.',
+                type: 'error'
+            });
         }
 
-        // Reset form
-        setStep(1);
-        setFormData({
-            tripType: "", helpType: "", destination: "", departureDate: "",
-            tripDays: "", email: "", contactNumber: "", adultsCount: "",
-            childrenCount: "", hotelCategory: "", budget: "", bookingTime: "",
-            departureLocation: "", packageDetails: "", whatsappUpdates: ""
-        });
-        responses.length = 0;
+        // Close chatbot and reset form after short delay
+        setTimeout(() => {
+            setIsOpen(false);
+            setStep(1);
+            setFormData({
+                tripType: "", helpType: "", destination: "", departureDate: "",
+                tripDays: "", email: "", contactNumber: "", adultsCount: "",
+                childrenCount: "", hotelCategory: "", budget: "", bookingTime: "",
+                departureLocation: "", packageDetails: "", whatsappUpdates: ""
+            });
+            responses.length = 0;
+        }, 2000);
     };
     const handleOptionClick = (value) => {
         const fieldNames = [
@@ -121,10 +133,14 @@ const Chatbot = () => {
             {isOpen && (
                 <div className="chatbot-container">
                     <div className="chatbot-header">
-                        <span>AI Tour Bot</span>
+                        <div>
+                            <span>AI Tour Bot</span>
+                            {step < 17 && (
+                                <div className="chatbot-progress-text">Question {step} of 16</div>
+                            )}
+                        </div>
                         <button className="close-button" onClick={() => setIsOpen(false)}>×</button>
-                    </div>
-                    <div className="chatbot-content">
+                    </div>                    <div className="chatbot-content">
                         <p>{questions[step]}</p>
 
                         {step === 3 || step === 7 || step === 8 || step === 12 || step === 14 ? (
@@ -190,6 +206,13 @@ const Chatbot = () => {
                         )}
                     </div>
                 </div>
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
             )}
         </>
     );
