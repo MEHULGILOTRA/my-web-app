@@ -1,4 +1,4 @@
-/* footer.css */
+/* footer.css - Full width like landing page */
 footer {
     background-color: var(--primary-color);
     color: white;
@@ -6,6 +6,13 @@ footer {
     text-align: center;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: 0;
   }
   
   footer p {

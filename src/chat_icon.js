@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./chat_icon.css";
-import { sendEmail } from "./emailService";
+import { sendContactFormEmails } from "./emailServiceClient";
 
 const responses = []; // Define an array to store Q&A pairs
 
@@ -47,19 +47,36 @@ const Chatbot = () => {
 
     const handleSendEmail = async () => {
         setIsOpen(false);
-        await sendEmail(
-            formData.email,
-            formData.email,
-            responses,
-            "send-email"
-        );
-        // Send Confirmation Email to User
-        await sendEmail(
-            formData.email,
-            formData.email,
-            responses,
-            "send-email-user"
-        );
+
+        // Format responses into a readable message
+        const formattedMessage = responses.join('\n');
+        const userName = formData.email.split('@')[0] || 'Traveler';
+
+        try {
+            const result = await sendContactFormEmails(
+                userName,
+                formData.email,
+                `Chatbot Query Submission:\n\n${formattedMessage}`
+            );
+
+            if (result.success) {
+                alert('Thank you! Your travel requirements have been recorded. Check your email for confirmation.');
+            } else {
+                alert('Failed to send your query. Please check your EmailJS configuration.');
+            }
+        } catch (error) {
+            alert('Failed to send your query. Please try again or contact us directly.');
+        }
+
+        // Reset form
+        setStep(1);
+        setFormData({
+            tripType: "", helpType: "", destination: "", departureDate: "",
+            tripDays: "", email: "", contactNumber: "", adultsCount: "",
+            childrenCount: "", hotelCategory: "", budget: "", bookingTime: "",
+            departureLocation: "", packageDetails: "", whatsappUpdates: ""
+        });
+        responses.length = 0;
     };
     const handleOptionClick = (value) => {
         const fieldNames = [
@@ -157,11 +174,17 @@ const Chatbot = () => {
                                     <button key={option} onClick={() => handleOptionClick(option)}>{option}</button>
                                 ))}
                                 {step === 17 && (
-                                    <>
-                                        <p>Your response has been recorded! An agent will get in touch with you soon.</p>
-                                        <p>Thank you for choosing Skymiles Travels!!!</p>
-                                        <button onClick={handleSendEmail}>Submit</button>
-                                    </>
+                                    <div className="chatbot-confirmation">
+                                        <div className="confirmation-icon">✓</div>
+                                        <h3>Almost Done!</h3>
+                                        <p className="confirmation-main">We've recorded all your travel preferences and are ready to craft your perfect journey!</p>
+                                        <p className="confirmation-note">
+                                            You'll receive a confirmation email at <strong>{formData.email}</strong>
+                                        </p>
+                                        <button onClick={handleSendEmail} className="submit-final-button">
+                                            Submit My Requirements
+                                        </button>
+                                    </div>
                                 )}
                             </div>
                         )}

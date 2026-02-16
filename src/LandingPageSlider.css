@@ -1,12 +1,18 @@
-/* Landing Page Slider */
+/* Landing Page Slider - Full Width, No White Background */
 .landing-page-slider {
   position: relative;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-size: cover;
   background-position: center;
   z-index: 1;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 /* Slider Image Container */
@@ -74,58 +80,66 @@
   background-color: #e55b00;
 }
 
-/* Dot Container (always at the bottom of the screen) */
+/* Elegant dot styling */
 .dots-container {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
-  transform: translateX(-50%) translateZ(0);
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  align-items: center;
+  gap: 15px;
+  z-index: 10;
 }
 
-/* Individual Dot */
 .dot {
-  width: 12px;
-  height: 12px;
-  margin: 0 5px;
-  background-color: rgba(255, 255, 255, 0.5);
-  transform: rotate(22.5deg) translateZ(0);
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  display: inline-block;
+  transition: all 0.3s ease;
 }
 
-/* Active Dot */
+.dot:hover {
+  transform: scale(1.3);
+  background: rgba(255, 255, 255, 0.8);
+}
+
 .active-dot {
-  background-color: white;
+  background: white;
+  box-shadow: 0 0 15px rgba(123, 31, 162, 0.8),
+              0 0 30px rgba(123, 31, 162, 0.5);
+  transform: scale(1.2);
 }
 
-/* Next Image Previews (aligned at the bottom-right corner) */
+/* Next Image Previews - Bottom right, properly positioned */
 .next-images-container {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 15px;
+  z-index: 10;
 }
 
 .next-image-preview {
-  width: 80px;
-  height: 80px;
-  border: 3px solid rgba(255, 255, 255, 0.7);
+  width: 90px;
+  height: 90px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  will-change: transform;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .next-image-preview:hover {
-  transform: scale(1.2) translateZ(0);
+  transform: scale(1.15);
+  border-color: var(--accent-color);
+  box-shadow: 0 6px 25px rgba(123, 31, 162, 0.5);
 }
 
 .next-image-preview img {
@@ -135,10 +149,31 @@
   transform: translateZ(0);
 }
 
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .next-images-container {
+    bottom: 120px;
+    right: 15px;
+    gap: 10px;
+  }
+
+  .next-image-preview {
+    width: 70px;
+    height: 70px;
+    border-width: 3px;
+  }
+}
+
 @media (max-width: 480px) {
-  .next-image-preview img {
-    max-width: 60px;
-    max-height: 60px;
+  .next-images-container {
+    bottom: 130px;
+    right: 10px;
+  }
+
+  .next-image-preview {
+    width: 60px;
+    height: 60px;
+    border-width: 2px;
   }
 }
 
