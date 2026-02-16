@@ -38,26 +38,23 @@
   }
   
   .services-list li {
-    background-color: var(--accent-color);
-    padding: 15px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-size: 1em;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    padding: 20px 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(123, 31, 162, 0.3);
+    font-size: 1.1em;
     font-weight: 500;
     flex: 1 1 calc(50% - 40px);
     text-align: center;
-    color : white
+    color: white;
+    transition: all 0.3s ease;
+    font-family: var(--font-primary);
   }
-  
+
   .services-list li:hover {
-    background-color: var(--primary-color);
-    padding: 15px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-size: 1em;
-    font-weight: 500;
-    flex: 1 1 calc(50% - 40px);
-    text-align: center;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(123, 31, 162, 0.5);
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
   }
   
   @media (max-width: 600px) {

@@ -30,7 +30,11 @@ function Header() {
                 <Link to="/search-results?destination=" className="li-items">
                   Packages
                 </Link>
+<<<<<<< HEAD
               </li>
+=======
+                </li>
+>>>>>>> claude/sharp-diffie
               <li className="li-items">
                 <Link to="/#contact" className="li-items">
                   Contact Us

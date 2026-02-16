@@ -3,10 +3,13 @@
 
 import emailjs from '@emailjs/browser';
 
-// Initialize EmailJS with public key from environment variable
-if (process.env.REACT_APP_EMAILJS_PUBLIC_KEY) {
-  emailjs.init(process.env.REACT_APP_EMAILJS_PUBLIC_KEY);
-}
+// EmailJS Configuration - Hardcoded credentials
+const EMAILJS_SERVICE_ID = 'service_f2n9yt8';
+const EMAILJS_TEMPLATE_ID = 'template_8rz3ful';
+const EMAILJS_PUBLIC_KEY = '6gkv6Ukc5A346CG9z';
+
+// Initialize EmailJS with public key
+emailjs.init(EMAILJS_PUBLIC_KEY);
 
 /**
  * Send contact form emails to both admin and user
@@ -18,18 +21,10 @@ if (process.env.REACT_APP_EMAILJS_PUBLIC_KEY) {
  */
 export const sendContactFormEmails = async (name, email, message) => {
   try {
-    // Validate environment variables
-    if (!process.env.REACT_APP_EMAILJS_SERVICE_ID ||
-        !process.env.REACT_APP_EMAILJS_TEMPLATE_ID ||
-        !process.env.REACT_APP_EMAILJS_PUBLIC_KEY) {
-      console.error('EmailJS credentials not found. Please configure .env file.');
-      return { success: false, message: 'Email configuration missing' };
-    }
-
     // Email 1: Send to admin (singapore.skymilestravels@gmail.com)
     await emailjs.send(
-      process.env.REACT_APP_EMAILJS_SERVICE_ID,
-      process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
       {
         to_email: 'singapore.skymilestravels@gmail.com',
         email_subject: `New Contact Form Submission from ${name}`,
@@ -48,8 +43,8 @@ This email was sent from the SkyMiles Travel website contact form.`
 
     // Email 2: Send confirmation to user
     await emailjs.send(
-      process.env.REACT_APP_EMAILJS_SERVICE_ID,
-      process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
       {
         to_email: email,
         email_subject: "We've Received Your Query - SkyMiles Travel",

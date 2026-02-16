@@ -16,6 +16,24 @@ function ContactUs() {
 
     try {
       const result = await sendContactFormEmails(name, email, message);
+<<<<<<< HEAD
+=======
+
+      if (result.success) {
+        setStatusMessage('Message sent successfully! Check your email for confirmation.');
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setStatusMessage(result.message || 'Failed to send message. Please check your EmailJS configuration.');
+      }
+    } catch (error) {
+      setStatusMessage('Failed to send message. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+>>>>>>> claude/sharp-diffie
 
       if (result.success) {
         setStatusMessage('Message sent successfully! Check your email for confirmation.');

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Enhanced Chatbot Styling with Modern Design */
 
 /* ===== CHATBOT BUTTON ===== */
@@ -7,6 +8,15 @@
     right: 80px;
     width: 60px;
     height: 60px;
+=======
+/* Chatbot button styling - Enhanced */
+.chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+>>>>>>> claude/sharp-diffie
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
@@ -16,7 +26,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+<<<<<<< HEAD
     box-shadow: 0 6px 20px rgba(123, 31, 162, 0.4);
+=======
+    box-shadow: 0 8px 20px rgba(123, 31, 162, 0.4);
+>>>>>>> claude/sharp-diffie
     transition: all 0.3s ease;
 }
 
@@ -26,6 +40,7 @@
 }
 
 .chatbot-button:hover {
+<<<<<<< HEAD
     transform: scale(1.15) translateY(-5px);
     box-shadow: 0 10px 30px rgba(123, 31, 162, 0.6);
 }
@@ -35,6 +50,17 @@
 }
 
 /* ===== CHATBOT CONTAINER ===== */
+=======
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 12px 30px rgba(123, 31, 162, 0.5);
+}
+
+.chatbot-button:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Chatbot container - Enhanced */
+>>>>>>> claude/sharp-diffie
 .chatbot-container {
     position: fixed;
     bottom: 90px;
@@ -43,6 +69,7 @@
     max-height: 600px;
     background: linear-gradient(135deg, #ffffff 0%, #f9f9fc 100%);
     border-radius: 20px;
+<<<<<<< HEAD
     box-shadow: 0 10px 40px rgba(123, 31, 162, 0.3);
     z-index: 1000;
     overflow: hidden;
@@ -62,6 +89,27 @@
 }
 
 /* ===== CHATBOT HEADER ===== */
+=======
+    box-shadow: 0 10px 30px rgba(123, 31, 162, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+    border: 2px solid var(--accent-color);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Chatbot header - Enhanced with gradient */
+>>>>>>> claude/sharp-diffie
 .chatbot-header {
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
@@ -73,6 +121,7 @@
     font-weight: bold;
     border-radius: 18px 18px 0 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
 }
 
 .header-left {
@@ -96,6 +145,8 @@
 .back-button:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: translateX(-2px);
+=======
+>>>>>>> claude/sharp-diffie
 }
 
 .close-button {
@@ -425,4 +476,237 @@
         padding: 12px 16px;
         font-size: 13px;
     }
+}
+
+/* Chatbot content - Enhanced with scrolling */
+.chatbot-content {
+    padding: 20px;
+    font-size: 15px;
+    color: #333;
+    max-height: 450px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) #f0f0f0;
+}
+
+/* Webkit scrollbar styling */
+.chatbot-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatbot-content::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+.chatbot-content::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+/* Enhanced question display */
+.chatbot-content > p {
+    background: linear-gradient(135deg, rgba(42, 42, 114, 0.05), rgba(123, 31, 162, 0.05));
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    color: var(--primary-color);
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Enhanced option buttons */
+.chatbot-options button {
+    background: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 14px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.chatbot-options button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--accent-color);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    z-index: -1;
+}
+
+.chatbot-options button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.chatbot-options button:hover {
+    color: white;
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(123, 31, 162, 0.3);
+}
+
+/* Confirmation section styling */
+.chatbot-confirmation {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.confirmation-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 15px;
+    animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+.chatbot-confirmation h3 {
+    color: var(--primary-color);
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.chatbot-confirmation .confirmation-main {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 15px 0;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.confirmation-note {
+    font-size: 13px;
+    color: #666;
+    font-style: italic;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 15px 0 !important;
+}
+
+.submit-final-button {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
+    color: white !important;
+    border: none !important;
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(123, 31, 162, 0.3);
+}
+
+.submit-final-button::before {
+    display: none !important;
+}
+
+.submit-final-button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(123, 31, 162, 0.4) !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chatbot-container {
+        width: 90%;
+        max-width: 380px;
+        right: 5%;
+        bottom: 80px;
+    }
+
+    .chatbot-button {
+        width: 52px;
+        height: 52px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .chatbot-button::before {
+        font-size: 24px;
+    }
+
+    .chatbot-content {
+        max-height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatbot-container {
+        width: 95%;
+        max-width: 340px;
+    }
+
+    .chatbot-header {
+        padding: 14px;
+        font-size: 16px;
+    }
+
+    .chatbot-options button {
+        padding: 12px 16px;
+        font-size: 13px;
+    }
+
+    .submit-final-button {
+        padding: 14px 28px;
+        font-size: 15px;
+    }
+}
+
+/* Back Button Styling - Enhanced */
+.back-button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-3px);
+}
+
+.back-button::before {
+    content: '←';
+    font-size: 16px;
+}
+
+/* Progress Indicator */
+.chatbot-progress-text {
+    font-size: 12px;
+    opacity: 0.9;
+    font-weight: 400;
 }

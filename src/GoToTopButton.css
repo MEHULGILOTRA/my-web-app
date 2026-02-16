@@ -1,41 +1,67 @@
-/* GoToTopButton.css */
+/* GoToTopButton.css - Right side, below chatbot */
 
-/* Initial styling for the Go to Top button (now as an arrow) */
 .go-to-top-button {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: var(--accent-color);
+    right: 90px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     border: none;
     border-radius: 50%;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
-    z-index: 1000; /* Ensure it's always on top */
+    z-index: 999;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: background-color 0.3s, transform 0.3s ease-in-out;
+    box-shadow: 0 8px 20px rgba(123, 31, 162, 0.4);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease;
   }
-  
+
   /* Styling the arrow */
   .go-to-top-button::before {
-    content: '↑'; /* Unicode for upward arrow */
-    font-size: 24px; /* Larger font size for visibility */
+    content: '↑';
+    font-size: 28px;
+    font-weight: bold;
   }
-  
+
   /* Button hover effect */
   .go-to-top-button:hover {
-    background-color: var(--primary-color);
-    transform: scale(1.1);
-  transform: translateY(-5px); /* Lift button on hover */
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 12px 30px rgba(123, 31, 162, 0.5);
   }
-  
-  /* Active state styling (when clicked) */
+
+  /* Active state styling */
   .go-to-top-button:active {
-    transform: translateY(2px); /* Slightly depress button on click */
+    transform: translateY(-2px) scale(1.05);
+  }
+
+  /* Animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .go-to-top-button {
+      width: 52px;  /* Changed from 48px to match chat icon */
+      height: 52px; /* Changed from 48px to match chat icon */
+      bottom: 85px;
+      right: 15px;
+    }
+
+    .go-to-top-button::before {
+      font-size: 24px;
+    }
   }
   

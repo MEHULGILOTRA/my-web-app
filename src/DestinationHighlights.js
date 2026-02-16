@@ -23,6 +23,10 @@ const DestinationHighlights = () => {
     return () => clearInterval(borderInterval);
   }, []);
 
+  const handleImageClick = (clickedIndex) => {
+    setIndex(clickedIndex);
+  };
+
   const renderedImages = useMemo(() => {
     return images.map((image, i) => {
       const isMain = i === index;
@@ -33,6 +37,7 @@ const DestinationHighlights = () => {
           style={{
             borderColor: isMain ? borderColor : 'rgba(255, 255, 255, 0.6)',
           }}
+          onClick={() => handleImageClick(i)}
         >
           <img
             src={image.src}

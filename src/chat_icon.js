@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import "./chat_icon.css";
 import { sendContactFormEmails } from "./emailServiceClient";
+<<<<<<< HEAD
+=======
+import Toast from "./components/Toast";
+
+const responses = []; // Define an array to store Q&A pairs
+>>>>>>> claude/sharp-diffie
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [step, setStep] = useState(1);
     const [userInput, setUserInput] = useState("");
+<<<<<<< HEAD
     const [errorMessage, setErrorMessage] = useState("");
     const [responses, setResponses] = useState([]);
+=======
+    const [toast, setToast] = useState(null);
+>>>>>>> claude/sharp-diffie
     const [formData, setFormData] = useState({
         tripType: "",
         helpType: "",
@@ -46,8 +56,11 @@ const Chatbot = () => {
     };
 
     const handleSendEmail = async () => {
+<<<<<<< HEAD
         setIsOpen(false);
 
+=======
+>>>>>>> claude/sharp-diffie
         // Format responses into a readable message
         const formattedMessage = responses.join('\n');
         const userName = formData.email.split('@')[0] || 'Traveler';
@@ -60,6 +73,7 @@ const Chatbot = () => {
             );
 
             if (result.success) {
+<<<<<<< HEAD
                 alert('Thank you! Your travel requirements have been recorded. Check your email for confirmation.');
             } else {
                 alert('Failed to send your query. Please check your EmailJS configuration.');
@@ -78,6 +92,37 @@ const Chatbot = () => {
         });
         setResponses([]);
         setErrorMessage("");
+=======
+                setToast({
+                    message: '✨ Thank you! Your travel requirements have been recorded. Check your email for confirmation.',
+                    type: 'success'
+                });
+            } else {
+                setToast({
+                    message: 'Failed to send your query. Please check your EmailJS configuration.',
+                    type: 'error'
+                });
+            }
+        } catch (error) {
+            setToast({
+                message: 'Failed to send your query. Please try again or contact us directly.',
+                type: 'error'
+            });
+        }
+
+        // Close chatbot and reset form after short delay
+        setTimeout(() => {
+            setIsOpen(false);
+            setStep(1);
+            setFormData({
+                tripType: "", helpType: "", destination: "", departureDate: "",
+                tripDays: "", email: "", contactNumber: "", adultsCount: "",
+                childrenCount: "", hotelCategory: "", budget: "", bookingTime: "",
+                departureLocation: "", packageDetails: "", whatsappUpdates: ""
+            });
+            responses.length = 0;
+        }, 2000);
+>>>>>>> claude/sharp-diffie
     };
 
     const handleOptionClick = (value) => {
@@ -143,6 +188,7 @@ const Chatbot = () => {
             {isOpen && (
                 <div className="chatbot-container">
                     <div className="chatbot-header">
+<<<<<<< HEAD
                         <div className="header-left">
                             {step > 1 && step < 17 && (
                                 <button className="back-button" onClick={handleBack}>← Back</button>
@@ -161,6 +207,17 @@ const Chatbot = () => {
                         </div>
 
                         <p className="chatbot-question">{questions[step]}</p>
+=======
+                        <div>
+                            <span>AI Tour Bot</span>
+                            {step < 17 && (
+                                <div className="chatbot-progress-text">Question {step} of 16</div>
+                            )}
+                        </div>
+                        <button className="close-button" onClick={() => setIsOpen(false)}>×</button>
+                    </div>                    <div className="chatbot-content">
+                        <p>{questions[step]}</p>
+>>>>>>> claude/sharp-diffie
 
                         {step === 3 || step === 7 || step === 8 || step === 12 || step === 14 ? (
                             <div className="chatbot-input-container">
@@ -213,8 +270,15 @@ const Chatbot = () => {
                                     <div className="chatbot-confirmation">
                                         <div className="confirmation-icon">✓</div>
                                         <h3>Almost Done!</h3>
+<<<<<<< HEAD
                                         <p>We've recorded all your preferences. Click submit to send your travel requirements to our team.</p>
                                         <p className="confirmation-note">You'll receive a confirmation email at <strong>{formData.email}</strong></p>
+=======
+                                        <p className="confirmation-main">We've recorded all your travel preferences and are ready to craft your perfect journey!</p>
+                                        <p className="confirmation-note">
+                                            You'll receive a confirmation email at <strong>{formData.email}</strong>
+                                        </p>
+>>>>>>> claude/sharp-diffie
                                         <button onClick={handleSendEmail} className="submit-final-button">
                                             Submit My Requirements
                                         </button>
@@ -228,6 +292,13 @@ const Chatbot = () => {
                         )}
                     </div>
                 </div>
+            )}
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
             )}
         </>
     );

@@ -1,21 +1,23 @@
-/* Header Styles */
+/* Header Styles - Professional Full Width */
 .header-container {
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
   height: auto;
   color: white;
-  font-family: 'Roboto', sans-serif;
-  text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   animation: slideIn 1s ease-out;
-  z-index: 1000; /* Ensure header stays on top of other content */
+  z-index: 1001;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 30px;
   width: 100%;
-  position: fixed; /* Fix the header at the top */
+  position: fixed;
   top: 0;
   left: 0;
-  box-sizing: border-box; /* Prevents padding from affecting width */
+  box-sizing: border-box;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 /* Header Animation */

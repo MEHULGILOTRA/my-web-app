@@ -1,8 +1,9 @@
-/* ContactUs.css */
+/* ContactUs.css - Enhanced */
 .contact-us {
   padding: var(--spacing-xl) var(--spacing-sm);
   background-color: var(--background-light);
   text-align: center;
+<<<<<<< HEAD
   max-width: 800px;
   margin: 0 auto;
 }
@@ -37,5 +38,216 @@
 
   .contact-intro {
     font-size: 1em;
+=======
+  /* max-width: 800px; */ /* Removed - let section span full width like other sections */
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 3em;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+  font-family: var(--font-primary);
+}
+
+.contact-intro {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 40px;
+  font-family: var(--font-primary);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Form message styling - Enhanced */
+.form-message {
+  padding: 18px 24px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.4s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-message.success {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+  border-left: 4px solid #28a745;
+}
+
+.form-message.success::before {
+  content: '✓';
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.form-message.error {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+  color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.form-message.error::before {
+  content: '⚠';
+  font-size: 24px;
+}
+
+/* Form inputs - Enhanced */
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1.1em;
+  font-family: var(--font-primary);
+  border-radius: 12px;
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+  background: white;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.form-input:disabled,
+.form-textarea:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Button styling - Enhanced */
+.btn-primary {
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  font-size: 1.3em;
+  font-family: var(--font-primary);
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(123, 31, 162, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(123, 31, 162, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(135deg, #ccc, #999);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary:disabled::before {
+  display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-us {
+    padding: 40px 15px;
+  }
+
+  .section-title {
+    font-size: 2.2em;
+  }
+
+  .contact-intro {
+    font-size: 1.1em;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 1em;
+    padding: 12px 16px;
+  }
+
+  .btn-primary {
+    font-size: 1.1em;
+    padding: 14px 32px;
+  }
+
+  .form-message {
+    font-size: 1em;
+    padding: 14px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 1.8em;
+  }
+
+  .contact-intro {
+    font-size: 1em;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 0.95em;
+  }
+
+  .btn-primary {
+    font-size: 1em;
+    padding: 12px 28px;
+>>>>>>> claude/sharp-diffie
   }
 }
