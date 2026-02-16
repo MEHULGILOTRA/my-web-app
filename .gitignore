@@ -25,3 +25,5 @@ yarn-error.log*
 
 # Claude Code worktrees
 /.claude
+
+.START_HERE.md
