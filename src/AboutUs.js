@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+import React from "react";
 import "./AboutUs.css";
-import profile from './images/profile.jpeg'; // Adjust the path based on where the image is located
+// import profile from './images/profile.jpeg'; // Adjust the path based on where the image is located
 import icons from './datasources/icons';
 
 function AboutUs() {

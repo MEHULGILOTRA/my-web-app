@@ -52,7 +52,7 @@ function SearchResults() {
                 </button>
                 <div>
                 <Link to="/#contact" className="li-items">
-                <h2 className="package-title"></h2>
+                {/* <h2 className="package-title"></h2> */}
                 <button className="package-button book-now">
                   BOOK NOW
                   </button>
