@@ -54,8 +54,8 @@
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .go-to-top-button {
-      width: 48px;
-      height: 48px;
+      width: 52px;  /* Changed from 48px to match chat icon */
+      height: 52px; /* Changed from 48px to match chat icon */
       bottom: 85px;
       right: 15px;
     }

@@ -9,10 +9,10 @@
   overflow: hidden;
   margin: 0;
   padding: 0;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  left: 0;        /* Changed from 50% - no longer needed with App padding removed */
+  right: 0;       /* Changed from 50% */
+  margin-left: 0; /* Changed from -50vw */
+  margin-right: 0; /* Changed from -50vw */
 }
 
 /* Slider Image Container */
@@ -30,8 +30,9 @@
 
 .image-slider {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh + 100px); /* Add extra height to account for header */
   object-fit: cover;
+  object-position: center top;  /* Anchor to top, allow bottom to extend */
   image-rendering: -webkit-optimize-contrast;
   transform: translateZ(0);
 }

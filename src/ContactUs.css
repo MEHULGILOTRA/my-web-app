@@ -3,7 +3,7 @@
   padding: 60px 20px;
   background-color: var(--background-light);
   text-align: center;
-  max-width: 800px;
+  /* max-width: 800px; */ /* Removed - let section span full width like other sections */
   margin: 0 auto;
 }
 
