@@ -105,12 +105,3 @@
     transform: translateX(calc(-50%)) translateZ(0);
   }
 }
-<<<<<<< HEAD
-
-.scroll-item img:hover {
-  transform: scale(1.15) rotate(2deg) translateZ(0);
-  box-shadow: 0px 15px 40px rgba(123, 31, 162, 0.4);
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-}
-=======
->>>>>>> claude/sharp-diffie

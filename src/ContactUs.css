@@ -1,44 +1,8 @@
 /* ContactUs.css - Enhanced */
 .contact-us {
-  padding: var(--spacing-xl) var(--spacing-sm);
+  padding: 60px 20px;
   background-color: var(--background-light);
   text-align: center;
-<<<<<<< HEAD
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.contact-intro {
-  font-size: 1.2em;
-  color: var(--text-color);
-  margin-bottom: 30px;
-  font-family: var(--font-primary);
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  animation: fadeInUp 0.6s ease;
-}
-
-/* Remove redundant input/textarea styles - now using utility classes */
-.contact-us input:disabled,
-.contact-us textarea:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background-color: #f5f5f5;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .contact-us {
-    padding: var(--spacing-lg) var(--spacing-xs);
-  }
-
-  .contact-intro {
-    font-size: 1em;
-=======
   /* max-width: 800px; */ /* Removed - let section span full width like other sections */
   margin: 0 auto;
 }
@@ -248,6 +212,5 @@
   .btn-primary {
     font-size: 1em;
     padding: 12px 28px;
->>>>>>> claude/sharp-diffie
   }
 }

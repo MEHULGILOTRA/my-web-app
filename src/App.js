@@ -18,12 +18,7 @@ function App() {
     if (location.hash) {
       const element = document.getElementById(location.hash.substring(1));
       if (element) {
-        const headerHeight = 80; // Fixed header offset
-        const elementPosition = element.offsetTop - headerHeight;
-        window.scrollTo({
-          top: elementPosition,
-          behavior: 'smooth'
-        });
+        element.scrollIntoView({ behavior: "auto" });
       }
     }
   }, [location.hash]);
