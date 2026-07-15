@@ -25,7 +25,7 @@ const imageDescriptionsShort = {
 
 const icons = [
   { src: packages, description: imageDescriptions.packages, shortDesc : imageDescriptionsShort.packages },
-  { src: bookings, description: imageDescriptions.bookings, shortDesc : imageDescriptionsShort.pabookingsckages },
+  { src: bookings, description: imageDescriptions.bookings, shortDesc : imageDescriptionsShort.bookings },
   { src: visa, description: imageDescriptions.visa, shortDesc : imageDescriptionsShort.visa },
   { src: itinerary, description: imageDescriptions.itinerary, shortDesc : imageDescriptionsShort.itinerary },
   { src: group_travel, description: imageDescriptions.group_travel, shortDesc : imageDescriptionsShort.group_travel },

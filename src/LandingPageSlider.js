@@ -27,14 +27,6 @@ function LandingPageSlider() {
     return () => clearInterval(interval);
   }, []);
 
-  const visibleSlides = useMemo(() => {
-    return images.filter((_, idx) => {
-      const delta = Math.abs(idx - currentIndex);
-      const wrapDelta = Math.abs(idx - currentIndex + images.length);
-      return Math.min(delta, wrapDelta) <= 1;
-    });
-  }, [currentIndex]);
-
   const nextImages = useMemo(() => {
     return [1, 2, 3].map((offset) =>
       images[(currentIndex + offset) % images.length]
@@ -51,20 +43,21 @@ function LandingPageSlider() {
 
   return (
     <section className="landing-page-slider">
-      {visibleSlides.map((imgObj) => {
-        const idx = images.indexOf(imgObj);
+      {images.map((imgObj, idx) => {
         const isActive = idx === currentIndex;
         return (
           <div key={idx} className={`slide ${isActive ? 'active' : ''}`}>
             <img
               src={imgObj.src}
-              alt={`Slide ${idx + 1}`}
+              alt={imgObj.description || `Slide ${idx + 1}`}
               className="image-slider"
-              loading={isActive ? "eager" : "lazy"}
+              loading={idx === 0 ? "eager" : "lazy"}
+              decoding="async"
+              fetchpriority={idx === 0 ? "high" : "low"}
             />
             {isActive && (
               <div className="image-description">
-                {imgObj.description[`imag${idx + 1}`]}
+                {imgObj.description}
               </div>
             )}
           </div>

@@ -26,4 +26,7 @@ yarn-error.log*
 # Claude Code worktrees
 /.claude
 
+# Uncompressed image backups (kept locally only)
+/image-originals
+
 .START_HERE.md

@@ -44,6 +44,7 @@ const DestinationHighlights = () => {
             alt={image.description}
             className={isMain ? 'main-image' : ''}
             loading="lazy"
+            decoding="async"
           />
           <p>{image.description}</p>
         </div>

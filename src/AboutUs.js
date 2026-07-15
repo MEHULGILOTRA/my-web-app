@@ -15,7 +15,7 @@ function AboutUs() {
       <div className="services-cards">
         {icons.map((item, index) => (
           <div key={index} className="service-card">
-            <img src={item.src} alt={item.description} className="service-icon" />
+            <img src={item.src} alt={item.description} className="service-icon" loading="lazy" decoding="async" />
             <h4>{item.description}</h4>
           </div>
         ))}
