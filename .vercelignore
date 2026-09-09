@@ -24,3 +24,8 @@ coverage
 
 # Build artifacts (Vercel builds fresh)
 build
+
+# SkyMiles Travel OS — a separate Next.js app in this repo, deployed as its own
+# Vercel project with Root Directory = travel-os. It must not be uploaded with
+# the marketing site build.
+travel-os
