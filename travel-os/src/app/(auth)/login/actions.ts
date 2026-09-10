@@ -106,6 +106,19 @@ export async function signIn(
   });
 
   if (error) {
+    // Logged server-side for the same reason sendMagicLink logs: the response
+    // below is deliberately vague, so without this line a misconfigured
+    // environment is indistinguishable from a typo'd password — by the
+    // operator as well as by an attacker. `status` is the one that matters:
+    // 400 is genuinely bad credentials, anything else is infrastructure.
+    console.error("[auth] password sign-in failed:", {
+      status: error.status,
+      code: error.code,
+      message: error.message,
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      anonKeyLength: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.length,
+    });
+
     // Not distinguishing "no such account" from "wrong password" — that
     // difference tells an attacker which addresses are registered.
     return { error: "Incorrect email or password." };

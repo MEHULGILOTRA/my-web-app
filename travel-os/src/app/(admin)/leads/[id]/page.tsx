@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { createQuotationForLead } from "@/app/(admin)/quotations/actions";
 import { DocumentPanel, type DocumentRow } from "@/components/admin/document-panel";
 import { LeadStageSelect } from "@/components/admin/lead-stage-select";
+import { DeleteLeadButton } from "@/components/leads/delete-lead-button";
 import { PriorityDot } from "@/components/admin/stage-pill";
 import { requireStaff } from "@/lib/auth/session";
 import { createStaffClient } from "@/lib/db/admin";
@@ -84,6 +85,13 @@ export default async function LeadDetailPage(props: PageProps<"/leads/[id]">) {
             Edit
           </Link>
           <LeadStageSelect leadId={lead.id} status={lead.status} />
+          <DeleteLeadButton
+            leadId={lead.id}
+            reference={lead.reference}
+            clientName={customer?.full_name ?? "Unknown customer"}
+            redirectTo="/leads"
+            size="sm"
+          />
         </div>
       </header>
 

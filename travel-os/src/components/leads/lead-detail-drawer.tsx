@@ -25,6 +25,7 @@ import {
   type QuoteRow,
 } from "@/components/leads/lead-drawer-parts";
 import { PriorityDot, StagePill } from "@/components/admin/stage-pill";
+import { DeleteLeadButton } from "@/components/leads/delete-lead-button";
 import { outstandingCount } from "@/lib/leads/fulfilment";
 import type { LeadRecord } from "@/lib/leads/lead-record";
 import { shortDate } from "@/lib/format";
@@ -207,6 +208,16 @@ export function LeadDetailDrawer({
             href={`/leads/${lead.id}`}
           />
           <QuickAction icon={Pencil} label="Edit" href={`/leads/${lead.id}/edit`} />
+          {/* Pushed right so a destructive action is never adjacent to Edit,
+              which sits where the pointer already is. */}
+          <div className="ml-auto">
+            <DeleteLeadButton
+              leadId={lead.id}
+              reference={lead.lead_id}
+              clientName={lead.client_name}
+              size="sm"
+            />
+          </div>
         </div>
 
         {/* --------------------------------------------------- tabs */}

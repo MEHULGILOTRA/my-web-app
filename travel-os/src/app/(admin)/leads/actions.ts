@@ -112,6 +112,55 @@ export async function setLeadStage(
 }
 
 // ---------------------------------------------------------------------------
+// Delete and restore
+//
+// Soft delete: quotations cascade from leads, so a hard delete would destroy
+// priced work on a mis-click. The database function stamps deleted_at, writes a
+// timeline entry, and refuses to remove a lead that has become a trip.
+// ---------------------------------------------------------------------------
+
+export type DeleteLeadState = { error?: string; deleted?: boolean };
+
+export async function deleteLead(
+  _prev: DeleteLeadState,
+  formData: FormData,
+): Promise<DeleteLeadState> {
+  await requireStaff();
+
+  const leadId = String(formData.get("lead_id") ?? "");
+  if (!leadId) return { error: "Missing lead." };
+
+  const reason = String(formData.get("reason") ?? "").trim();
+
+  const supabase = await createStaffClient();
+  const { error } = await supabase.rpc("delete_lead", {
+    p_lead_id: leadId,
+    p_reason: reason || null,
+  });
+
+  // P0001 is the converted-to-a-trip refusal, raised with a message written to
+  // be read by an agent. Everything else is unexpected and reported as-is.
+  if (error) return { error: error.message };
+
+  revalidatePath("/leads");
+  revalidatePath(`/leads/${leadId}`);
+  revalidatePath("/");
+  return { deleted: true };
+}
+
+export async function restoreLead(leadId: string) {
+  await requireStaff();
+
+  const supabase = await createStaffClient();
+  const { error } = await supabase.rpc("restore_lead", { p_lead_id: leadId });
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/leads");
+  revalidatePath(`/leads/${leadId}`);
+  revalidatePath("/");
+}
+
+// ---------------------------------------------------------------------------
 // Full lead edit
 // ---------------------------------------------------------------------------
 

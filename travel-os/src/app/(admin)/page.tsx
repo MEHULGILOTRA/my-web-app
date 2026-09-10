@@ -25,7 +25,7 @@ export default async function DashboardPage() {
 
   const [{ data: stageCounts }, { data: dueLeads }, { data: recentLeads }] =
     await Promise.all([
-      supabase.from("leads").select("status"),
+      supabase.from("leads").select("status").is("deleted_at", null),
       supabase
         .from("leads")
         .select(
@@ -33,6 +33,7 @@ export default async function DashboardPage() {
         )
         .lte("next_followup_date", today)
         .not("status", "in", "(won,lost,dormant)")
+        .is("deleted_at", null)
         .order("next_followup_date", { ascending: true })
         .limit(10),
       supabase
@@ -40,6 +41,7 @@ export default async function DashboardPage() {
         .select(
           "id, reference, title, destination, status, priority, next_followup_date, budget_max, customers:primary_customer_id(full_name)",
         )
+        .is("deleted_at", null)
         .order("created_at", { ascending: false })
         .limit(8),
     ]);

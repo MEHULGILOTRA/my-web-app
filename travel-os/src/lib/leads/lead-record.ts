@@ -97,6 +97,10 @@ export type LeadRecord = {
   next_action_at: string | null;
   lost_reason: string | null;
   special_notes: string | null;
+
+  /** Set only on soft-deleted leads, which appear in the "Deleted" view alone. */
+  deleted_at: string | null;
+  delete_reason: string | null;
 };
 
 /** Columns fetched for list and drawer. Kept in one place so they cannot drift. */
@@ -109,6 +113,7 @@ const LEAD_SELECT = `
   budget_max, status, priority, next_followup_date,
   next_action, next_action_type, next_action_at,
   lost_reason, special_notes, owner_staff_id,
+  deleted_at, delete_reason,
   customers:primary_customer_id(id, full_name, phone_e164, email, city, customer_type),
   staff_users:owner_staff_id(full_name)
 `;
@@ -176,6 +181,8 @@ function toRecord(row: RawLead): LeadRecord {
     next_action_at: (row.next_action_at as string) ?? null,
     lost_reason: (row.lost_reason as string) ?? null,
     special_notes: (row.special_notes as string) ?? null,
+    deleted_at: (row.deleted_at as string) ?? null,
+    delete_reason: (row.delete_reason as string) ?? null,
   };
 }
 
@@ -216,6 +223,7 @@ export const SAVED_VIEWS: SavedView[] = [
   { key: "high_value", label: "High value", description: "Budget over 2 lakh" },
   { key: "this_month", label: "Travelling this month", description: "Departing in the next 30 days" },
   { key: "lost", label: "Lost", description: "Closed without booking" },
+  { key: "deleted", label: "Deleted", description: "Removed — restorable from here" },
 ];
 
 /** Fetches leads, applying a saved view, stage filter, search and sort. */
@@ -233,6 +241,14 @@ export async function fetchLeads(
     .select(LEAD_SELECT, { count: "exact" })
     .order(SORTABLE[sort], { ascending: dir, nullsFirst: false })
     .limit(query.limit ?? 200);
+
+  // Deleted leads are excluded from every view but their own. Applied here
+  // rather than per-case so a new saved view cannot forget it and start
+  // resurrecting deleted records in a list.
+  request =
+    query.view === "deleted"
+      ? request.not("deleted_at", "is", null)
+      : request.is("deleted_at", null);
 
   switch (query.view) {
     case "mine":
@@ -257,6 +273,10 @@ export async function fetchLeads(
     }
     case "lost":
       request = request.eq("status", "lost");
+      break;
+    case "deleted":
+      // Already filtered above; no status restriction — a deleted lead is shown
+      // whatever stage it was in when it was removed.
       break;
     default:
       // "All leads" hides closed records; they have their own views.

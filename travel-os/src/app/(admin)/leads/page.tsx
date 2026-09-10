@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 
 import { ClickableRow } from "@/components/admin/data-table";
+import { RestoreLeadButton } from "@/components/leads/delete-lead-button";
 import { PriorityDot, StagePill } from "@/components/admin/stage-pill";
 import { EmptyState, RowLink, SortHeader } from "@/components/admin/table-parts";
 import {
@@ -259,7 +260,12 @@ function LeadRow({
         {followup.label}
       </td>
       <td className="w-6 pr-2">
-        <ChevronRight className="text-muted-foreground size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+        {/* In the Deleted view the row's affordance is Restore, not "open". */}
+        {lead.deleted_at ? (
+          <RestoreLeadButton leadId={lead.id} reference={lead.lead_id} />
+        ) : (
+          <ChevronRight className="text-muted-foreground size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+        )}
       </td>
     </ClickableRow>
   );
