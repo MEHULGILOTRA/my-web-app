@@ -29,6 +29,7 @@ export default async function CustomerDetailPage(
         .from("leads")
         .select("id, reference, destination, status, budget_max, lead_date")
         .eq("primary_customer_id", id)
+        .is("deleted_at", null)
         .order("lead_date", { ascending: false }),
       supabase
         .from("legacy_trips")
