@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   SkyMiles Travels — design tokens.
+
+   The type scale is not invented. It is measured from travelnextlvl.de at
+   1440px: display 89.28px on a 98.2px line (1.1), sub-display exactly half at
+   44.64px, labels 11.5px uppercase with ~0.03em tracking. Those ratios are
+   reproduced here as fluid clamps so the relationship holds at every width.
+
+   Canvas #F1F1F1 and ink #010101 are also measured, not approximated.
+   --------------------------------------------------------------------------- */
+
+@theme {
+  /* Canvas and ink. Photography supplies all the colour this site has. */
+  --color-canvas: #f1f1f1;
+  --color-ink: #010101;
+  --color-paper: #ffffff;
+
+  /* Brand indigo survives from the existing identity, but only as an accent:
+     focus rings, one CTA state, the logo lockup. Never as a fill. The old
+     purple #7B1FA2 and cream #F9F1E7 are deliberately retired — cream against
+     #F1F1F1 reads as a printing error rather than a palette. */
+  --color-accent: #2a2a72;
+
+  /* Ink at reduced weight, for secondary text and hairlines. */
+  --color-ink-60: rgb(1 1 1 / 0.6);
+  --color-ink-40: rgb(1 1 1 / 0.4);
+  --color-ink-12: rgb(1 1 1 / 0.12);
+  --color-canvas-60: rgb(241 241 241 / 0.6);
+
+  /* Fluid type. The vw component is derived from the measured 1440px sizes:
+     89.28 / 1440 = 6.2vw, and the sub-display is exactly half of it. */
+  --text-display: clamp(2.5rem, 6.2vw, 5.58rem);
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: 0.01em;
+
+  --text-subdisplay: clamp(1.75rem, 3.1vw, 2.79rem);
+  --text-subdisplay--line-height: 1.1;
+  --text-subdisplay--letter-spacing: 0.01em;
+
+  --text-lead: clamp(1.125rem, 1.5vw, 1.375rem);
+  --text-lead--line-height: 1.45;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+
+  /* Labels stay fixed: they are UI, not editorial, and should not scale. */
+  --text-label: 0.719rem; /* 11.5px */
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.03em;
+
+  /* Motion. One easing for entrances, one for exits — more than two reads as
+     inconsistency rather than craft. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  /* Lenis drives scrolling; native smooth behaviour fights it. */
+  scroll-behavior: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Never let a full-bleed or marquee section scroll the page sideways. */
+  overflow-x: clip;
+}
+
+/* Lenis needs this to own the scroll; without it the page double-scrolls. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------------
+   Focus. Visible, always — the accent exists largely for this.
+   --------------------------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background-color: var(--color-ink);
+  color: var(--color-canvas);
+}
+
+/* ---------------------------------------------------------------------------
+   Colour inversion.
+
+   Adapted from the reference, where 99 elements participate: as a dark image
+   panel scrolls beneath fixed text, the text flips light. Done by toggling a
+   class from ScrollTrigger rather than with mix-blend-mode, which is what
+   makes it essentially free.
+   --------------------------------------------------------------------------- */
+[data-invert="true"] {
+  color: var(--color-canvas);
+}
+
+[data-invert="true"] :focus-visible {
+  outline-color: var(--color-canvas);
+}
+
+/* ---------------------------------------------------------------------------
+   Reveal primitives.
+
+   The masked wrapper is the mechanism for every line and word reveal: an
+   overflow-hidden box with a translated inner. Declared once here so no
+   component reinvents it, and so the reduced-motion reset below can neutralise
+   all of them in one rule.
+   --------------------------------------------------------------------------- */
+.reveal-mask {
+  display: block;
+  overflow: hidden;
+}
+
+.reveal-inner {
+  display: block;
+  will-change: transform;
+}
+
+/* ---------------------------------------------------------------------------
+   Reduced motion.
+
+   Treated as a designed state, not a kill switch: content renders in its final
+   position, fully legible, with nothing left mid-animation. GSAP timelines are
+   additionally never constructed under this preference — see lib/motion.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-inner {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
