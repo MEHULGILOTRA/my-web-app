@@ -1,4 +1,5 @@
 import { inr } from "@/lib/format";
+import { describeMeta, type LineMeta } from "@/lib/quotations/line-item-kinds";
 
 /**
  * Renders a quotation as WhatsApp-ready plain text.
@@ -22,6 +23,15 @@ export type QuotationLine = {
   line_total: number;
   is_optional: boolean;
   is_included: boolean;
+  /** Per-kind detail — check-in dates, meal plan, flight timings. */
+  meta?: LineMeta | null;
+};
+
+export type QuotationDay = {
+  day_number: number;
+  date: string | null;
+  title: string | null;
+  description: string | null;
 };
 
 export type QuotationForText = {
@@ -73,9 +83,34 @@ function travelWindow(quote: QuotationForText): string | null {
   const start = longDate(quote.travel_start);
   const end = longDate(quote.travel_end);
 
-  if (start && end) return `${start} – ${end}`;
+  // A same-day trip reads as one date, not a range of one. "12 Sept – 12 Sept"
+  // looks like a bug to the person receiving it.
+  if (start && end) return start === end ? start : `${start} – ${end}`;
   if (start) return start;
   return quote.travel_month;
+}
+
+/**
+ * Nights, preferring the explicit field but falling back to the dates.
+ *
+ * An agent who fills in travel dates and leaves `duration_nights` blank should
+ * still get "2 nights" on the quotation — leaving it off because one field was
+ * skipped is the kind of gap that makes people distrust the generated text and
+ * go back to typing it by hand.
+ */
+function nightCount(quote: QuotationForText): number | null {
+  if (quote.duration_nights && quote.duration_nights > 0) {
+    return quote.duration_nights;
+  }
+
+  if (!quote.travel_start || !quote.travel_end) return null;
+
+  const start = new Date(quote.travel_start);
+  const end = new Date(quote.travel_end);
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return null;
+
+  const nights = Math.round((end.getTime() - start.getTime()) / 86_400_000);
+  return nights > 0 ? nights : null;
 }
 
 function paxLine(quote: QuotationForText): string {
@@ -95,6 +130,7 @@ export function renderQuotationText(
   lines: QuotationLine[],
   agentName: string,
   brandName = "SkyMiles Travels",
+  days: QuotationDay[] = [],
 ): string {
   const out: string[] = [];
 
@@ -102,16 +138,21 @@ export function renderQuotationText(
   out.push(`*${brandName}*`);
 
   const heading = quote.destination ?? quote.title;
+  const nights = nightCount(quote);
   if (heading) {
-    const nights = quote.duration_nights
-      ? ` — ${quote.duration_nights} ${quote.duration_nights === 1 ? "night" : "nights"}`
+    // "2 nights / 3 days" is how an Indian traveller reads an itinerary length
+    // — and it is the first thing they check against their leave dates.
+    const suffix = nights
+      ? ` — ${nights} ${nights === 1 ? "night" : "nights"} / ${nights + 1} days`
       : "";
-    out.push(`_${heading}${nights}_`);
+    out.push(`_${heading}${suffix}_`);
   }
 
   out.push("");
 
   const window = travelWindow(quote);
+  // Duration lives in the heading only. Repeating it here read as clutter on a
+  // message that is meant to be scanned in a WhatsApp thread.
   if (window) out.push(`📅  ${window}`);
   out.push(`👥  ${paxLine(quote)}`);
 
@@ -127,6 +168,16 @@ export function renderQuotationText(
     included.forEach((line, index) => {
       out.push("");
       out.push(`${index + 1}. *${line.title}*`);
+
+      /**
+       * Detail before the note. On a hotel line this is what turns
+       * "Skon Boutique" into "17 Sept – 19 Sept / 2 nights · 1 room /
+       * Breakfast only" — the difference between a price list and a quotation.
+       */
+      for (const detail of describeMeta(line.kind, line.meta ?? {})) {
+        out.push(`    ${detail}`);
+      }
+
       if (line.description) out.push(`    ${line.description}`);
 
       // Show the per-unit maths only when quantity is more than one, otherwise
@@ -143,12 +194,23 @@ export function renderQuotationText(
   }
 
   // ---- Optional -----------------------------------------------------------
-  const optional = lines.filter((line) => line.is_optional);
+  const optional = lines
+    .filter((line) => line.is_optional)
+    .sort((a, b) => a.sort_order - b.sort_order);
   if (optional.length > 0) {
     out.push("");
     out.push("*OPTIONAL ADD-ONS*");
     for (const line of optional) {
-      out.push(`•  ${line.title} — ${inr(line.line_total)}`);
+      out.push("");
+      out.push(`•  *${line.title}* — ${inr(line.line_total)}`);
+
+      // Add-ons carry their detail too. A bare "Mount Batur trek — ₹11,500"
+      // invites the exact question the quotation is supposed to pre-empt:
+      // which day, and what does it include.
+      for (const detail of describeMeta(line.kind, line.meta ?? {})) {
+        out.push(`    ${detail}`);
+      }
+      if (line.description) out.push(`    ${line.description}`);
     }
   }
 
@@ -163,6 +225,26 @@ export function renderQuotationText(
   }
 
   // ---- Money --------------------------------------------------------------
+  // ---- Day by day --------------------------------------------------------
+  //
+  // Placed after the components and before the price: the customer reads what
+  // they get, then how the trip actually unfolds, then what it costs.
+  if (days.length > 0) {
+    out.push("");
+    out.push("*DAY BY DAY*");
+
+    for (const day of days) {
+      out.push("");
+      const heading = [
+        `Day ${day.day_number}`,
+        longDate(day.date),
+        day.title,
+      ].filter(Boolean);
+      out.push(`*${heading.join(" · ")}*`);
+      if (day.description) out.push(day.description);
+    }
+  }
+
   out.push("");
   out.push("──────────────");
 

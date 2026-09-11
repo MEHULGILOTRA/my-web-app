@@ -25,6 +25,55 @@ export type SignedDocument = {
   filename: string;
 };
 
+type DocumentRow = {
+  customer_visible: boolean;
+  owner_type: string;
+  owner_id: string;
+};
+
+/**
+ * May this customer read this document?
+ *
+ * Two conditions, both required:
+ *
+ *   1. `customer_visible` is true. Staff decide what a traveller sees; internal
+ *      paperwork stays internal even when it hangs off their own trip.
+ *   2. The document's owner resolves to this customer — either the customer
+ *      record itself, or a trip they are a traveller on.
+ *
+ * Trip membership, never household: a co-traveller invited to one trip must not
+ * inherit sight of the booker's other travel. `trip_travellers` is the
+ * authority on that, which is why it is queried rather than `households`.
+ *
+ * Anything else — quotations, leads, payments, services — returns false. Those
+ * owner types exist for internal attachments; if a customer ever needs one, it
+ * gets an explicit rule here rather than falling through a default.
+ */
+async function customerMayRead(
+  supabase: Awaited<ReturnType<typeof createStaffClient>>,
+  document: DocumentRow,
+  customerId: string,
+): Promise<boolean> {
+  if (!document.customer_visible) return false;
+
+  if (document.owner_type === "customer") {
+    return document.owner_id === customerId;
+  }
+
+  if (document.owner_type === "trip") {
+    const { data } = await supabase
+      .from("trip_travellers")
+      .select("id")
+      .eq("trip_id", document.owner_id)
+      .eq("customer_id", customerId)
+      .maybeSingle();
+
+    return data !== null;
+  }
+
+  return false;
+}
+
 export async function getSignedDocumentUrl(
   documentId: string,
   actor: { type: "staff" | "customer"; id: string },
@@ -33,11 +82,29 @@ export async function getSignedDocumentUrl(
 
   const { data: document } = await supabase
     .from("documents")
-    .select("id, bucket, storage_path, filename")
+    .select("id, bucket, storage_path, filename, customer_visible, owner_type, owner_id")
     .eq("id", documentId)
     .maybeSingle();
 
   if (!document) return null;
+
+  /**
+   * Entitlement.
+   *
+   * This client authenticates with the service role, so the lookup above
+   * bypasses RLS entirely and will happily return ANY document — including
+   * another traveller's passport. When the caller is a customer, `documentId`
+   * came from a URL they control, so ownership has to be proved here. Without
+   * this block the function is an IDOR: change the id, get someone else's PAN
+   * card.
+   *
+   * Staff are not checked: they are already authorised for the whole agency,
+   * and every access is logged below either way.
+   */
+  if (actor.type === "customer") {
+    const entitled = await customerMayRead(supabase, document, actor.id);
+    if (!entitled) return null;
+  }
 
   const headerList = await headers();
 

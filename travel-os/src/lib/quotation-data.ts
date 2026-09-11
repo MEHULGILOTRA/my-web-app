@@ -1,7 +1,11 @@
 import "server-only";
 
 import type { createStaffClient } from "@/lib/db/admin";
-import type { QuotationForText, QuotationLine } from "@/lib/quotation-text";
+import type {
+  QuotationDay,
+  QuotationForText,
+  QuotationLine,
+} from "@/lib/quotation-text";
 
 type SupabaseClient = Awaited<ReturnType<typeof createStaffClient>>;
 
@@ -16,6 +20,7 @@ export type QuotationPayload = {
     customer_name: string | null;
   };
   lines: (QuotationLine & { id: string; est_supplier_cost: number })[];
+  days: QuotationDay[];
 };
 
 /**
@@ -60,10 +65,21 @@ export async function loadQuotationForText(
   const { data: items } = await supabase
     .from("quotation_items")
     .select(
-      "id, sort_order, kind, title, description, qty, unit, customer_price, line_total, est_supplier_cost, is_optional, is_included",
+      "id, sort_order, kind, title, description, qty, unit, customer_price, line_total, est_supplier_cost, is_optional, is_included, meta",
     )
     .eq("quotation_id", quotationId)
     .order("sort_order");
+
+  /**
+   * The day-by-day plan. Optional — many quotations are a price for a set of
+   * components rather than a narrated itinerary — but when it exists it is the
+   * part that answers most of the customer's questions before they ask.
+   */
+  const { data: days } = await supabase
+    .from("quotation_day_plan")
+    .select("day_number, date, title, description")
+    .eq("quotation_id", quotationId)
+    .order("day_number");
 
   return {
     quote: {
@@ -110,6 +126,15 @@ export async function loadQuotationForText(
       est_supplier_cost: Number(item.est_supplier_cost),
       is_optional: item.is_optional,
       is_included: item.is_included,
+      // Without this the per-kind detail is selected from the database and then
+      // silently dropped before it reaches the renderer.
+      meta: (item.meta ?? {}) as Record<string, string>,
+    })),
+    days: (days ?? []).map((day) => ({
+      day_number: day.day_number,
+      date: day.date,
+      title: day.title,
+      description: day.description,
     })),
   };
 }

@@ -224,8 +224,26 @@ export function QuickAddLeadDialog({ open, onOpenChange }: Props) {
             <button
               type="button"
               onClick={() => {
+                /**
+                 * Carry whatever has already been typed across to the full
+                 * form. Navigating bare threw it all away — an agent halfway
+                 * through an enquiry would click "every field" and watch the
+                 * customer's name and number vanish, which is the fastest way
+                 * to make someone go back to Excel.
+                 */
+                const form = formRef.current;
+                const params = new URLSearchParams();
+
+                if (form) {
+                  for (const [key, value] of new FormData(form).entries()) {
+                    const text = String(value).trim();
+                    if (text) params.set(key, text);
+                  }
+                }
+
                 onOpenChange(false);
-                router.push("/leads/new");
+                const query = params.toString();
+                router.push(query ? `/leads/new?${query}` : "/leads/new");
               }}
               className="text-muted-foreground hover:text-foreground text-[11px] underline underline-offset-2"
             >
