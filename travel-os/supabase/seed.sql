@@ -233,7 +233,7 @@ insert into public.leads (
   '44444444-0000-4000-8000-000000000007',
   'Bali honeymoon — 6 nights', 'Bali (Ubud + Kuta)', true,
   'Jaipur', '2026-10-14', 6, 2, 0,
-  'honeymoon', '5_star_luxury', 'cp', '1_double',
+  'honeymoon', '5_star_luxury', 'cp', 'double_sharing',
   'to_quote', 'not_applicable', 'private_cab', 'recommended',
   260000.00, 280000.00, 'repeat', 'won', 'hot', '2026-09-10',
   'Honeymoon', 'Private pool villa in Ubud; candle light dinner included.'

@@ -9,6 +9,13 @@ import { z } from "zod";
 import { requireStaff } from "@/lib/auth/session";
 import { createStaffClient } from "@/lib/db/admin";
 import { loadQuotationForText } from "@/lib/quotation-data";
+import {
+  forexCost,
+  forexTotal,
+  KIND_FIELDS,
+  PRICE_DERIVED_KINDS,
+  visibleFields,
+} from "@/lib/quotations/line-item-kinds";
 
 /** Creates the first quotation for a lead, inheriting its trip details. */
 export async function createQuotationForLead(leadId: string) {
@@ -105,6 +112,60 @@ const itemSchema = z.object({
 
 export type ItemState = { error?: string; ok?: boolean };
 
+/**
+ * Detail fields for the line's kind, out of the `meta_*` form inputs.
+ *
+ * Driven by KIND_FIELDS rather than by whatever the form happened to submit:
+ * only declared fields for the declared kind are stored, so a stale input left
+ * over from switching type cannot end up printed on a customer's quotation.
+ * Empty values are dropped rather than stored as "".
+ */
+function collectMeta(kind: string, formData: FormData): Record<string, string> {
+  const collected: Record<string, string> = {};
+
+  for (const spec of KIND_FIELDS[kind] ?? []) {
+    const raw = formData.get(`meta_${spec.name}`);
+    const value = typeof raw === "string" ? raw.trim() : "";
+    if (value) collected[spec.name] = value;
+  }
+
+  /**
+   * Second pass drops conditional fields whose condition is not met — a return
+   * leg on a one-way flight, for instance. The form already hides them, but a
+   * Server Action is a public endpoint: the browser is not the only thing that
+   * can post here, and data that reaches the row gets printed on a quotation.
+   */
+  const meta: Record<string, string> = {};
+  for (const spec of visibleFields(kind, collected)) {
+    if (collected[spec.name]) meta[spec.name] = collected[spec.name];
+  }
+
+  return meta;
+}
+
+/**
+ * Applies a derived price where the kind computes its own total.
+ *
+ * Forex is priced by arithmetic — amount x rate plus charges — so the generic
+ * Qty/Price/Cost inputs are hidden for it in the form. Doing the sum here, on
+ * the server, rather than posting a number from the browser means the figure
+ * printed on the quotation is the same one stored against the line.
+ */
+function applyDerivedPrice(
+  kind: string,
+  meta: Record<string, string>,
+  parsed: { qty: number; customer_price: number; est_supplier_cost: number },
+) {
+  if (!PRICE_DERIVED_KINDS.has(kind)) return parsed;
+
+  return {
+    ...parsed,
+    qty: 1,
+    customer_price: forexTotal(meta) ?? 0,
+    est_supplier_cost: forexCost(meta),
+  };
+}
+
 export async function addQuotationItem(
   _prev: ItemState,
   formData: FormData,
@@ -132,16 +193,74 @@ export async function addQuotationItem(
     .select("id", { count: "exact", head: true })
     .eq("quotation_id", parsed.data.quotation_id);
 
+  const meta = collectMeta(parsed.data.kind, formData);
+
   const { error } = await supabase.from("quotation_items").insert({
     ...parsed.data,
+    ...applyDerivedPrice(parsed.data.kind, meta, parsed.data),
     description: parsed.data.description || null,
     unit: parsed.data.unit || null,
+    meta,
     sort_order: (count ?? 0) + 1,
   });
 
   if (error) return { error: error.message };
 
   revalidatePath(`/quotations/${parsed.data.quotation_id}`);
+  return { ok: true };
+}
+
+/**
+ * Edits an existing line.
+ *
+ * Draft-only, matching every other write here: once a quotation is sent it is
+ * superseded by a new version rather than edited, so an old share link always
+ * shows what was actually offered.
+ */
+export async function updateQuotationItem(
+  _prev: ItemState,
+  formData: FormData,
+): Promise<ItemState> {
+  await requireStaff();
+
+  const itemId = String(formData.get("item_id") ?? "");
+  if (!itemId) return { error: "Missing line item." };
+
+  const parsed = itemSchema.safeParse({
+    quotation_id: formData.get("quotation_id"),
+    kind: formData.get("kind"),
+    title: formData.get("title"),
+    description: formData.get("description") ?? undefined,
+    qty: formData.get("qty") ?? 1,
+    unit: formData.get("unit") ?? undefined,
+    customer_price: formData.get("customer_price") ?? 0,
+    est_supplier_cost: formData.get("est_supplier_cost") ?? 0,
+    is_optional: formData.get("is_optional") === "on",
+  });
+
+  if (!parsed.success) return { error: parsed.error.issues[0].message };
+
+  const supabase = await createStaffClient();
+
+  const { quotation_id, ...fields } = parsed.data;
+
+  const meta = collectMeta(fields.kind, formData);
+
+  const { error } = await supabase
+    .from("quotation_items")
+    .update({
+      ...fields,
+      ...applyDerivedPrice(fields.kind, meta, fields),
+      description: fields.description || null,
+      unit: fields.unit || null,
+      meta,
+    })
+    .eq("id", itemId)
+    .eq("quotation_id", quotation_id);
+
+  if (error) return { error: error.message };
+
+  revalidatePath(`/quotations/${quotation_id}`);
   return { ok: true };
 }
 
@@ -209,9 +328,17 @@ export async function sendQuotation(quotationId: string) {
     prepared_by: staff.full_name,
     // Costs are deliberately absent. Do not add them here.
     lines: payload.lines.map((line) => ({
+      // sort_order is carried because renderQuotationText sorts on it. Without
+      // it a snapshot re-rendered later compares undefined values and the
+      // included items come back in arbitrary order.
+      sort_order: line.sort_order,
       kind: line.kind,
       title: line.title,
       description: line.description,
+      // The per-kind detail — meal plan, check-in dates, flight timings. A
+      // frozen quote has to keep printing exactly what the customer was shown,
+      // and that detail is part of what they were shown.
+      meta: line.meta ?? {},
       qty: line.qty,
       unit: line.unit,
       customer_price: line.customer_price,
@@ -219,6 +346,9 @@ export async function sendQuotation(quotationId: string) {
       is_optional: line.is_optional,
       is_included: line.is_included,
     })),
+    // Frozen with the rest: a sent quotation must keep showing the itinerary
+    // the customer was actually given, even if the draft is later re-planned.
+    days: payload.days,
   };
 
   const { error } = await supabase.rpc("send_quotation", {

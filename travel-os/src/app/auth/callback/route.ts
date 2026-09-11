@@ -20,8 +20,16 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get("code");
   const tokenHash = searchParams.get("token_hash");
   const type = searchParams.get("type") as EmailOtpType | null;
+  /**
+   * `next` comes straight off a URL, so it only ever goes to a same-origin
+   * path. A leading "//" is the trap: `//evil.com` starts with "/" but browsers
+   * read it as protocol-relative and leave the site — which would turn a
+   * genuine SkyMiles sign-in link into an open redirect, landing an
+   * already-authenticated customer on someone else's page.
+   */
   const nextParam = searchParams.get("next");
-  const next = nextParam?.startsWith("/") ? nextParam : "/";
+  const next =
+    nextParam?.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/";
 
   const supabase = await createStaffClient();
 

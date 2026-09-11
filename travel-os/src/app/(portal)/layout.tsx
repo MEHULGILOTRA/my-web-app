@@ -19,7 +19,12 @@ import type { ReactNode } from "react";
  * noindex because trip pages are private to the traveller.
  */
 export const metadata: Metadata = {
-  title: "My SkyMiles Trip",
+  // Template so child pages read "Sign in — My SkyMiles Trip" rather than a
+  // bare "Sign in", which tells a customer nothing in a tab or a shared link.
+  title: {
+    default: "My SkyMiles Trip",
+    template: "%s — My SkyMiles Trip",
+  },
   description:
     "Your itinerary, documents and trip details from SkyMiles Travels.",
   robots: { index: false, follow: false },

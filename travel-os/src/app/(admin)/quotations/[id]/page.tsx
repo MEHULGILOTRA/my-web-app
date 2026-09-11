@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { QuotationItemForm } from "@/components/admin/quotation-item-form";
+import { QuotationLineActions } from "@/components/admin/quotation-line-actions";
+import { describeMeta } from "@/lib/quotations/line-item-kinds";
 import { QuotationToolbar } from "@/components/admin/quotation-toolbar";
 import { canSeeMargin, requireStaff } from "@/lib/auth/session";
 import { createStaffClient } from "@/lib/db/admin";
@@ -17,11 +19,17 @@ export default async function QuotationPage(props: PageProps<"/quotations/[id]">
   const payload = await loadQuotationForText(supabase, id);
   if (!payload) notFound();
 
-  const { quote, lines } = payload;
+  const { quote, lines, days } = payload;
   const isDraft = quote.status === "draft";
   const showMargin = canSeeMargin(staff);
 
-  const whatsappText = renderQuotationText(quote, lines, staff.full_name);
+  const whatsappText = renderQuotationText(
+    quote,
+    lines,
+    staff.full_name,
+    undefined,
+    days,
+  );
 
   const cost = lines
     .filter((line) => line.is_included && !line.is_optional)
@@ -87,6 +95,7 @@ export default async function QuotationPage(props: PageProps<"/quotations/[id]">
                     {showMargin ? <th className="text-right">Cost</th> : null}
                     <th className="text-right">Total</th>
                     {showMargin ? <th className="text-right">Margin</th> : null}
+                    {isDraft ? <th className="w-16" /> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -110,6 +119,16 @@ export default async function QuotationPage(props: PageProps<"/quotations/[id]">
                               </span>
                             ) : null}
                           </p>
+                          {/* The same detail the customer will read, so the
+                              agent can check it without opening the preview. */}
+                          {describeMeta(line.kind, line.meta ?? {}).map((detail) => (
+                            <p
+                              key={detail}
+                              className="text-muted-foreground text-[11px]"
+                            >
+                              {detail}
+                            </p>
+                          ))}
                           {line.description ? (
                             <p className="text-muted-foreground text-[11px]">
                               {line.description}
@@ -139,6 +158,24 @@ export default async function QuotationPage(props: PageProps<"/quotations/[id]">
                             }}
                           >
                             {inr(lineMargin)}
+                          </td>
+                        ) : null}
+                        {isDraft ? (
+                          <td>
+                            <QuotationLineActions
+                              quotationId={quote.id}
+                              line={{
+                                id: line.id,
+                                kind: line.kind,
+                                title: line.title,
+                                description: line.description,
+                                qty: line.qty,
+                                customer_price: line.customer_price,
+                                est_supplier_cost: line.est_supplier_cost,
+                                is_optional: line.is_optional,
+                                meta: line.meta ?? null,
+                              }}
+                            />
                           </td>
                         ) : null}
                       </tr>

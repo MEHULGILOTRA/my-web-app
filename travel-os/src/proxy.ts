@@ -64,6 +64,15 @@ export async function proxy(request: NextRequest) {
   // Rewrite onto the /my prefix so customers get clean URLs, and refuse to
   // serve any admin route from the customer hostname.
   if (realm === "portal") {
+    /**
+     * `/auth/*` is shared machinery, not a portal page. Rewriting it onto the
+     * `/my` prefix would send every emailed sign-in link to a route that does
+     * not exist — the magic link would simply 404 on the customer hostname.
+     */
+    if (pathname.startsWith("/auth")) {
+      return NextResponse.next({ request });
+    }
+
     if (pathname.startsWith("/my")) {
       // Already prefixed — usually an internal link. Normalise to the clean
       // URL so only one form of every address exists.
